@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <title>ObjectRocket Articles</title>
+    <!-- BS4 source -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- CSS for doc body -->
+    <style>
+        body {
+            margin: 1rem;
+        }
+    </style>
+
+</head>
+<body>
+
+
+<h1>ObjectRocket Node Postgres App</h1>
+
+<!-- HTML form for the NodeJs Postgres app -->
+<form method="POST" action="http://127.0.0.1:3456/query">
+    <div class="form-group">
+        <label for="query-input">Postgres Integer Query:</label>
+        <input id="query-input" class="form-control"
+               type="number" name="query" placeholder="0"></input>
+        <br>
+    </div>
+
+    <button class="btn btn-success" type="submit" value="Submit">Submit Query</button>
+</form>
+
+<br>
+
+<!-- BS4 table begins here -->
+<div class="container">
+    <h2>Postgres-NodeJs Table Example</h2>
+    <table id="postgres-table" class="table table-striped">
+
+        <!--
+         HTML data returned from NodeJs app will go here
+       -->
+
+    </table>
+</div>
+
+<script>
+    window.addEventListener('load', function() {
+        let pgTable = document.getElementById("postgres-table");
+        try {
+            pgTable.innerHTML = tableData;
+            console.log(`\ntableData: ${tableData}`);
+        } catch(err) {
+            pgTable.innerHTML = "";
+        }
+    });
+
+</script>
+
+</body>
+</html>
