@@ -41,7 +41,7 @@ CREATE OR REPLACE FUNCTION hello(name VARCHAR) RETURNS VARCHAR AS $$
         CASE
             WHEN name IS NULL THEN
                 name = 'World';
-            WHEN name = '' THEN 
+            WHEN name = '' THEN
                 name = 'Anonymous';
             WHEN name = 'Bob' THEN
                 name = 'Robert';
@@ -70,7 +70,7 @@ SELECT * FROM hello('Bill');
 
 
 CREATE OR REPLACE FUNCTION rating(score INTEGER) RETURNS VARCHAR AS $$
-  BEGIN 
+  BEGIN
     CASE score
       WHEN 1,2,3 THEN
         RETURN 'poor';
@@ -129,7 +129,7 @@ SELECT * FROM random42();
 -- • returns this counter
 
 CREATE OR REPLACE FUNCTION counter42() RETURNS INTEGER AS $$
-  DECLARE 
+  DECLARE
     c INTEGER = 1;
   BEGIN
     WHILE (SELECT COUNT(*) FROM random42()) != 42 LOOP
@@ -168,7 +168,7 @@ SELECT * FROM random42();
 -- Task: modify it to return 0 if this exception occurs
 
 CREATE OR REPLACE FUNCTION counter42() RETURNS INTEGER AS $$
-  DECLARE 
+  DECLARE
     c INTEGER = 1;
   BEGIN
     WHILE (SELECT COUNT(*) FROM random42()) != 42 LOOP
@@ -206,7 +206,7 @@ $$ LANGUAGE plpgsql;
 SELECT * FROM random42();
 
 CREATE OR REPLACE FUNCTION counter42() RETURNS INTEGER AS $$
-  DECLARE 
+  DECLARE
     c INTEGER = 1;
   BEGIN
     WHILE (SELECT COUNT(*) FROM random42()) != 42 LOOP
@@ -245,3 +245,11 @@ CREATE OR REPLACE FUNCTION wrap_random42() RETURNS REFCURSOR AS $$
 $$ LANGUAGE plpgsql;
 
 SELECT * FROM wrap_random42();
+
+
+--- Get all baker
+CREATE FUNCTION getallbaker() RETURNS setof baker AS $$
+    SELECT * FROM baker;
+$$ LANGUAGE SQL;
+
+select * from getallbaker()
