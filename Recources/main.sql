@@ -56,14 +56,22 @@ INSERT INTO pizza(size, price) VALUES ('XL', 6);
 -- order
 CREATE TABLE "order"(
   o_id SERIAL NOT NULL PRIMARY KEY,
-  name VARCHAR(10) NOT NULL,
+  name VARCHAR(255) NOT NULL,
   quantity INTEGER NOT NULL,
-  price MONEY NOT NULL
+  price MONEY NOT NULL,
+  c_id SERIAL NOT NULL,
+  p_id SERIAL NOT NULL,
+  CONSTRAINT fk_customer
+    FOREIGN KEY(c_id)
+      REFERENCES customer(c_id),
+  CONSTRAINT fk_pizza
+    FOREIGN KEY(p_id)
+      REFERENCES pizza(p_id)
 );
 
-INSERT INTO "order"(name, quantity, price) VALUES('1501212131', 2, 9.5);
-INSERT INTO "order"(name, quantity, price) VALUES('1501212132', 3, 6);
-INSERT INTO "order"(name, quantity, price) VALUES('1501212133', 1, 2);
+INSERT INTO "order"(name, quantity, price, c_id, p_id) VALUES('1501212131', 2, 9.5, 1,1);
+INSERT INTO "order"(name, quantity, price, c_id, p_id) VALUES('1501212132', 3, 6, 1,2);
+INSERT INTO "order"(name, quantity, price, c_id, p_id) VALUES('1501212133', 1, 2, 2,3);
 
 
 -- supplier
