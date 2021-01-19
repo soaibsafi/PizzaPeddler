@@ -21,18 +21,18 @@ INSERT INTO baker(NAME) VALUES ('Safi');
 CREATE TABLE ingredients(
   i_id SERIAL NOT NULL PRIMARY KEY,
   name VARCHAR(40) NOT NULL,
-  reginal_provinance VARCHAR(40) NOT NULL,
+  regional_provinance VARCHAR(40) NOT NULL,
   unit_price MONEY NOT NULL,
   quantity INTEGER NOT NULL,
-  visibility BOOLEAN,
-  total_price MONEY NOT NULL
+  visibility BOOLEAN NOT NULL,
+  total_price MONEY NOT NULL,
+  s_id INTEGER NOT NULL,
+
+  CONSTRAINT fk_supplier
+    FOREIGN KEY(s_id)
+      REFERENCES supplier(s_id),
 );
 
-ALTER TABLE ingredients
-ADD COLUMN total_price REAL NOT NULL;
-
-ALTER TABLE ingredients 
-RENAME COLUMN price TO unit_price;
 
 INSERT INTO ingredients(name, reginal_provinance, unit_price, quantity, visibility, total_price) VALUES 
 ('Potato', 'Germany', 15,  10, True, 150);
@@ -55,18 +55,26 @@ INSERT INTO pizza(size, price) VALUES ('XL', 6);
 
 -- order
 CREATE TABLE "order"(
-  o_id SERIAL NOT NULL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
+  o_id VARCHAR(255),
   quantity INTEGER NOT NULL,
   price MONEY NOT NULL,
-  c_id SERIAL NOT NULL,
-  p_id SERIAL NOT NULL,
+  c_id INTEGER NOT NULL,
+  p_id INTEGER,
+  i_id INTEGER,
+
   CONSTRAINT fk_customer
     FOREIGN KEY(c_id)
       REFERENCES customer(c_id),
+
   CONSTRAINT fk_pizza
     FOREIGN KEY(p_id)
-      REFERENCES pizza(p_id)
+      REFERENCES pizza(p_id),
+
+  CONSTRAINT fk_ingredients
+    FOREIGN KEY(i_id)
+      REFERENCES ingredients(i_id),
+
+  PRIMARY KEY (o_id, p_id, i_id)
 );
 
 INSERT INTO "order"(name, quantity, price, c_id, p_id) VALUES('1501212131', 2, 9.5, 1,1);
