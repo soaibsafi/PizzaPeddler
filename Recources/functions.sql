@@ -23,18 +23,10 @@ $$ LANGUAGE plpgsql;
 select * from get_all_pizza_size();
 
 -- Cofirm order
-CREATE OR REPLACE FUNCTION confirm_order(pid INTEGER, cid INTEGER, qty INTEGER, fprice INTEGER) RETURNS VOID AS $$
-declare
-	   o_name TEXT;
-       order_id INTEGER;
+CREATE OR REPLACE FUNCTION confirm_order(pid INTEGER, cid INTEGER, iid INTEGER, oid VARCHAR, qty INTEGER, fprice INTEGER) RETURNS VOID AS $$
 BEGIN
-
-        SELECT o_id into order_id FROM "order" ORDER BY o_id DESC limit 1;
-        order_id = order_id + 1;
-        o_name = CONCAT('C',cid,'O', order_id);
-
-
-        INSERT INTO "order" (p_id, c_id, name, quantity, price) values (pid, cid, o_name, qty, fprice );
+        INSERT INTO "order" (p_id, c_id, o_id, i_id, quantity, price)
+        values (pid, cid, oid, iid, qty, fprice );
 END;
 $$ LANGUAGE plpgsql;
 
