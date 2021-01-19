@@ -22,12 +22,12 @@ client.connect()
 const query = {
   // give the query a unique name
   // name: 'fetch-user',
-  text: 'SELECT * from getallbaker() ',
+  text: 'select * from add_new_ingredient(\'Tomato\', \'japan\', 2, 10, \'true\', 1) ',
   //values: [1],
 }
 
 client.query(query, (err, res) => {
   client.end()
-  console.log(res.rows)
+  console.log(res)
 })
 
