@@ -95,3 +95,15 @@ $$ LANGUAGE plpgsql;
 
 
 SELECT * FROM change_ingredient_visibility(3);
+
+
+CREATE OR REPLACE FUNCTION get_customer(id INTEGER) RETURNS TABLE(c_id integer, name text) AS $$
+    BEGIN
+        RETURN QUERY
+            SELECT customer.c_id, customer.name
+            FROM public.customer
+            WHERE customer.c_id = id;
+    END;
+$$ LANGUAGE plpgsql;
+
+select * from get_customer(3);
