@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:master" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="31d8681a-7ac3-4d83-825e-f25b35626a4a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/pbm-plpgsql.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Recources/view/CustomerView.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Recources/view/bakerView1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Recources/view/bakerView2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Recources/view/bakerview3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edit.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/about.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/help.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/forecast.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/geocode.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/partials/footer.hbs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/partials/header.hbs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/views/404.hbs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/views/about.hbs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/views/customer.hbs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/views/help.hbs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/views/index.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connection.js" beforeDir="false" afterPath="$PROJECT_DIR$/connection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Test" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="ProjectId" id="1n1ECf03BNiTinwSVSC7LFb2JJA" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="31d8681a-7ac3-4d83-825e-f25b35626a4a" name="Default Changelist" comment="" />
+      <created>1610549072000</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1610549072000</updated>
+      <workItem from="1610549073700" duration="474000" />
+      <workItem from="1611004428687" duration="6575000" />
+      <workItem from="1611169416678" duration="313000" />
+      <workItem from="1611169833853" duration="501000" />
+    </task>
+    <task id="LOCAL-00001" summary="Update - connection.js&#10;Add - allbaker function">
+      <created>1610916782623</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1610916782623</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add - Function get_all_ingrediants and confirm_order">
+      <created>1611005646089</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1611005646089</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Update (function) - confirm_order">
+      <created>1611086943854</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1611086943854</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Update (function) - Change column name in  get_all_ingrediants and add_new_ingredient">
+      <created>1611092246732</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1611092246732</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Update - connection.js&#10;Add - allbaker function" />
+    <MESSAGE value="Add - Function get_all_ingrediants and confirm_order" />
+    <MESSAGE value="Update (function) - confirm_order" />
+    <MESSAGE value="Update (function) - Change column name in  get_all_ingrediants and add_new_ingredient" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update (function) - Change column name in  get_all_ingrediants and add_new_ingredient" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="69" y="299" key="#SQL_Dialects" timestamp="1611055836485">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="69" y="299" key="#SQL_Dialects/0.23.1440.877@0.23.1440.877" timestamp="1611055836485" />
+    <state x="155" y="58" key="CommitChangelistDialog2" timestamp="1611092246569">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="155" y="58" key="CommitChangelistDialog2/0.23.1440.877@0.23.1440.877" timestamp="1611092246569" />
+    <state x="221" y="78" key="SettingsEditor" timestamp="1611170528553">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="221" y="78" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1611170528553" />
+    <state x="319" y="203" key="Vcs.Push.Dialog.v2" timestamp="1611092252588">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="319" y="203" key="Vcs.Push.Dialog.v2/0.23.1440.877@0.23.1440.877" timestamp="1611092252588" />
+    <state x="517" y="384" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1611091831218">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="517" y="384" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.877@0.23.1440.877" timestamp="1611091831218" />
+    <state x="239" y="367" width="602" height="532" key="find.popup" timestamp="1611091997797">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="239" y="367" width="602" height="532" key="find.popup/0.23.1440.877@0.23.1440.877" timestamp="1611091997797" />
+  </component>
+</project>

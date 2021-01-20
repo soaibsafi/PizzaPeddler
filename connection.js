@@ -22,7 +22,7 @@ client.connect()
 const query = {
   // give the query a unique name
   // name: 'fetch-user',
-  text: 'select * from add_new_ingredient(\'Tomato\', \'japan\', 2, 10, \'true\', 1) ',
+  text: 'select * from get_customer(1)',
   //values: [1],
 }
 
