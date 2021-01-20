@@ -6,15 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer</title>
     <link rel="stylesheet" href="css/style.css">
+
+
 </head>
 <body>
     <div class="main-content">
         <p>Welcome {{username}}</p>
         <p>Order your pizza from here</p>
+
+        <form id="pizza-size">
+          <label for="cars">Choose Pizza Size:</label>
+
+          <select name="pizzaname" id="p_id">
+             <option value={{p_id}}>{{pizzaname}}</option>
+          </select>
+          <br><br>
+          <input type="submit" value="Submit">
+        </form>
+
     </div>
-
-    {{>footer}}
-
+    <script src="/js/customer.js"></script>
 </body>
 </html>
 

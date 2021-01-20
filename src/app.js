@@ -98,12 +98,27 @@ app.get('/user',(request,response)=>{
 
     client.query(query, (err, res) => {
         client.end()
-        console.log(res.rows[0]['name'])
-
         response.render('customer',{
-
             username: res.rows[0]['name']
         })
+    })
+
+})
+
+app.get('/getPizzaSize',(request,response)=>{
+
+    var query = {
+        text: 'select * from get_all_pizza_size()'
+    }
+
+    client.query(query, (err, res) => {
+        console.log(res.rows);
+
+        response.send({
+            pizzaData:res.rows
+        })
+
+        client.end()
     })
 
 })
