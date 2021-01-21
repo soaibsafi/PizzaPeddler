@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer</title>
+  <link rel="stylesheet" href="css/style.css">
 
 
 </head>
+
 <body>
-    <div class="main-content">
-        <p>Welcome {{username}}</p>
-        <p>Order your pizza from here</p>
+  <div class="main-content">
+    <p>Welcome {{username}}</p>
+    <p>Order your pizza from here</p>
 
-        <form id="pizzaForm">
-          <label for="cars">Choose Pizza Size:</label>
+    <form id="pizzaForm">
+      <label for="cars">Choose Pizza Size:</label>
 
-          <select name="pizzaname" id="pizzaDDL">
-             <option value=''>Select a pizza size</option>
-          </select>
-          <br><br>
+      <select name="pizzaname" id="pizzaDDL">
+        <option value=''>Select a pizza size</option>
+      </select>
+      <br><br>
 
-         <div id="ingredientsTBL">
-         </div>
-            <br/> <br/>
-          <button type="button" id="submitBTN">Order it!</button>
-        </form>
+      <div id="ingredientsTBL">
+      </div>
+      <br /> <br />
+      <button type="button" id="submitBTN">Order it!</button>
+    </form>
 
-    </div>
-    <script src="/js/customer.js"></script>
+  </div>
+  <script src="/js/customer.js"></script>
 </body>
-</html>
 
+</html>
