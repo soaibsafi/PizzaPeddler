@@ -147,6 +147,29 @@ app.get("/getAllIngredients", (request, response) => {
   });
 });
 
+
+// All About baker
+app.get("/baker", (request, response) => {
+  if (!request.query.id) {
+    return response.send({
+      error: "You have to provide an user id",
+    });
+  }
+
+  var bakerQuery = {
+    text: "select * from get_all_baker($1)",
+    values: [parseInt(request.query.id)],
+  };
+
+  client.query(query, (err, res) => {
+    response.render("customer", {
+      username: res.rows[0]["name"],
+    });
+  });
+});
+
+
+// Server
 app.listen(3000, () => {
   console.log("Server is up on port 3000");
 });
@@ -181,15 +204,5 @@ app.get("*", (req, res) => {
   });
 });
 
-/*
-app.get('', (req, res)=> {
-    res.send('Hello Express');
-});
 
-app.get('/help', (req, res) => {
-    res.send('Help page')
-})
 
-app.get('/about', (req, res) => {
-    res.send('About page')
-}) */
