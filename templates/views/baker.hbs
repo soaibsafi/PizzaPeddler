@@ -13,16 +13,10 @@
 
 <body>
 <div class="main-content">
-    <p>Welcome {{username}}</p>
-    <p>Order your pizza from here</p>
+    <p>Welcome, {{username}}!</p>
+    <p>View your order detail here</p>
 
-    <form id="pizzaForm">
-        <label for="cars">Choose Pizza Size:</label>
-
-        <select name="pizzaname" id="pizzaDDL">
-            <option value=''>Select a pizza size</option>
-        </select>
-        <br><br>
+    <form id="bakerForm">
 
         <div id="ingredientsTBL">
         </div>
@@ -31,7 +25,7 @@
     </form>
 
 </div>
-<script src="/js/customer.js"></script>
+<script src="/js/baker.js"></script>
 </body>
 
 </html>
