@@ -1,38 +1,27 @@
 console.log('Customer js file loaded')
 
-const pizzaSize = document.querySelector('#display-pizza');
-
-// const weatherForm = document.querySelector('form');
-// const search = document.querySelector('input');
-// const messageOne = document.querySelector('#message-1');
-// const messageTwo = document.querySelector('#message-2');
-
-
-// pizzaSize.addEventListener('load', (e) => {
-//     e.preventDefault()
-//     const location = search.value;
-//     messageOne.textContent = 'Loading...';
-//     messageTwo.textContent = '';
-
-//     console.log("hello")
-//     fetch('http://localhost:3000/getPizzaSize').then((response) => {
-//         response.json().then((data) => {
-//             console.log(data)
-//         })
-//     })
-// })
-
+const pizzaSize = document.querySelector('form');
+const pizzaDDL = document.querySelector('#pizzaDDL');
+const submitBTN = document.querySelector('#submitBTN');
 
 window.onload = (event) => {
     event.preventDefault();
     console.log('page is fully loaded');
-
-        console.log("hello")
-        fetch('http://localhost:3000/getPizzaSize').then((response) => {
+    fetch('http://localhost:3000/pizza').then((response) => {
         response.json().then((data) => {
-            pizzaSize.textContent = data.pizzaData;
-            console.log(pizzaSize.textContent)
-            console.log(data.pizzaData)
+          // console.log(data.pizzaData);
+
+            for(var i=0;i<data.pizzaData.length;i++)
+            {
+                var opt = new Option(data.pizzaData[i].pizzaname, data.pizzaData[i].p_id);
+                pizzaDDL.append(opt);
+            }
         })
     })
 };
+
+submitBTN.addEventListener("click",(e) => {
+    console.log('the ddl value and text');
+    console.log(pizzaDDL.value);
+})
+

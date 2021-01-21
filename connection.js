@@ -10,24 +10,36 @@ const { Pool, Client } = require('pg')
 //     console.log(err, res)
 //     pool.end()
 // })
-const client = new Client({
-  user: 'pbmdb_rw',
-  host: 'pgsql.hrz.tu-chemnitz.de',
-  database: 'pbmdb',
-  password: 'ingah4eiW',
-  port: 5432,
+var client = new Client({
+    user: 'pbmdb_rw',
+    host: 'pgsql.hrz.tu-chemnitz.de',
+    database: 'pbmdb',
+    password: 'ingah4eiW',
+    port: 5432,
 })
 client.connect()
 
-const query = {
-  // give the query a unique name
-  // name: 'fetch-user',
-  text: 'select * from get_customer(1)',
-  //values: [1],
+var query = {
+    // give the query a unique name
+    // name: 'fetch-user',
+    text: 'select * from get_all_pizza_size()',
+    //values: [1],
 }
 
 client.query(query, (err, res) => {
-  client.end()
-  console.log(res)
+    client.end()
+    console.log(res.rows)
+})
+
+query = {
+    // give the query a unique name
+    // name: 'fetch-user',
+    text: 'select * from get_customer($1)',
+    values:[2]
+}
+
+client.query(query, (err, res) => {
+    client.end()
+    console.log(res.rows)
 })
 

@@ -14,18 +14,14 @@
         <p>Welcome {{username}}</p>
         <p>Order your pizza from here</p>
 
-        <form id="pizza-size">
+        <form id="pizzaForm">
           <label for="cars">Choose Pizza Size:</label>
-        
-          <select name="pizzaname" id="p_id">
-              <option>Choose color</option>
-      {{#each pizzaSize}}
-      <option id="display-pizza" value={{pizzaname}}</option>
-      {{/each}}
-          
+
+          <select name="pizzaname" id="pizzaDDL">
+             <option value=''>Select a pizza size</option>
           </select>
           <br><br>
-          <input type="submit" value="Submit">
+          <button type="button" id="submitBTN">Order it!</button>
         </form>
 
     </div>

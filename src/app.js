@@ -4,25 +4,48 @@ const { Pool, Client } = require('pg')
 const express = require('express');
 const hbs = require('hbs');
 
-const client = new Client({
+var client = new Client({
     user: 'pbmdb_rw',
     host: 'pgsql.hrz.tu-chemnitz.de',
     database: 'pbmdb',
     password: 'ingah4eiW',
     port: 5432,
 })
-client.connect()
+///client.connect()
+
+client.connect(err => {
+    if (err) {
+        console.error('connection error', err.stack)
+    } else {
+        console.log('connected')
+    }
+})
 
 const geocode = require('./utils/geocode');
 const forecast = require('./utils/forecast');
 
 
 const app = express();
+//Setup static directory to serve
+
+app.use(express.json());
+
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+    next();
+});
 
 //Define path for Express config
 const publicDirectoryPath = path.join(__dirname, '../public');
 const viewPath = path.join(__dirname, '../templates/views')
 const partiaslPath = path.join(__dirname, '../templates/partials')
+
+app.use(express.static(publicDirectoryPath));
+
 
 
 
@@ -32,8 +55,7 @@ app.set('views', viewPath)
 hbs.registerPartials(partiaslPath);
 
 
-//Setup static directory to serve
-app.use(express.static(publicDirectoryPath));
+
 
 app.get('', (req, res)=> {
     res.render('index', {
@@ -97,30 +119,31 @@ app.get('/user',(request,response)=>{
     }
 
     client.query(query, (err, res) => {
-        //client.end()
+    //    client.end();
         response.render('customer',{
-            username: res.rows[0]['name']
+           username: res.rows[0]['name']
         })
     })
 
 })
 
-app.get('/getPizzaSize',(request,response)=>{
 
-    var query = {
+
+app.get('/pizza',(request,response)=>{
+
+    var pizzaquery = {
         text: 'select * from get_all_pizza_size()'
     }
-
-    client.query(query, (err, res) => {
-        console.log(res.rows);
-        //client.end()
-        
-        response.send({
-            pizzaData:res.rows
+    client.query(pizzaquery, (err, res) => {
+        // console.log(res);
+          response.send({
+            pizzaData: res.rows
         })
+
     })
 
 })
+
 
 app.listen(3000, () => {
     console.log('Server is up on port 3000');
