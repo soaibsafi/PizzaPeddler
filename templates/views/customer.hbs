@@ -16,22 +16,24 @@
     <p>Welcome {{username}}</p>
     <p>Order your pizza from here</p>
 
-    <form id="pizzaForm">
-      <label for="cars">Choose Pizza Size:</label>
-
+      <label for="pizzaSize">Choose Pizza Size:</label>
       <select name="pizzaname" id="pizzaDDL">
         <option value=''>Select a pizza size</option>
       </select>
-      <br><br>
-
+      <br/><br/>
       <div id="ingredientsTBL">
       </div>
-      <br /> <br />
+      <br/><br/>
+      <div id="orderCartTBL">
+      </div>
+      <br/><br/>
+      <label for="total" id="totalPriceLBL">Total Price:</label>
+      <label for="totalAmount" id="totalPriceAmountLBL">0</label>
       <button type="button" id="submitBTN">Order it!</button>
-    </form>
 
   </div>
   <script src="/js/customer.js"></script>
+
 </body>
 
 </html>

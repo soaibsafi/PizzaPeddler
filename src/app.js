@@ -179,7 +179,7 @@ app.get("/getIngredientInfo", (request, response) => {
   };
   client.query(ingredientsQuery, (err, res) => {
     response.send({
-      ingredientsData: res.rows,
+      ingredientData: res.rows,
     });
   });
 });
