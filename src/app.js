@@ -170,6 +170,20 @@ app.get("/baker", (request, response) => {
 
 
 // Server
+app.get("/getIngredientInfo", (request, response) => {
+
+  var ingredientsQuery = {
+    name: "fetch-one-ingredient-info",
+    text: "select * from get_ingrediant($1)",
+    values:[parseInt(request.query.id)]
+  };
+  client.query(ingredientsQuery, (err, res) => {
+    response.send({
+      ingredientsData: res.rows,
+    });
+  });
+});
+
 app.listen(3000, () => {
   console.log("Server is up on port 3000");
 });
@@ -204,5 +218,15 @@ app.get("*", (req, res) => {
   });
 });
 
+/*
+app.get('', (req, res)=> {
+    res.send('Hello Express');
+});
 
+app.get('/help', (req, res) => {
+    res.send('Help page')
+})
 
+app.get('/about', (req, res) => {
+    res.send('About page')
+}) */
