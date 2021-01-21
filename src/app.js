@@ -129,7 +129,7 @@ app.get('/user',(request,response)=>{
 
 
 
-app.get('/pizza',(request,response)=>{
+app.get('/getPizzaSize',(request,response)=>{
 
     var pizzaquery = {
         text: 'select * from get_all_pizza_size()'
@@ -143,6 +143,24 @@ app.get('/pizza',(request,response)=>{
     })
 
 })
+
+app.get('/getAllIngredients',(request,response)=>{
+
+    var ingredientsQuery = {
+        name: 'fetch-ingredients',
+        text: 'select * from get_all_ingrediants ()'
+    }
+    client.query(ingredientsQuery, (err, res) => {
+
+        response.send({
+            ingredientsData: res.rows
+        })
+
+    })
+
+})
+
+
 
 
 app.listen(3000, () => {
