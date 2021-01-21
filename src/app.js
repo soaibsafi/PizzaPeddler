@@ -156,14 +156,25 @@ app.get("/baker", (request, response) => {
     });
   }
 
-  var bakerQuery = {
-    text: "select * from get_all_baker($1)",
+  let bakerQuery = {
+    text: "select * from get_baker($1)",
     values: [parseInt(request.query.id)],
   };
-
-  client.query(query, (err, res) => {
-    response.render("customer", {
+  client.query(bakerQuery, (err, res) => {
+    response.render("baker", {
       username: res.rows[0]["name"],
+    });
+  });
+});
+
+app.get("/getAllIngredientsForBaker", (request, response) => {
+  let ingredientsQueryBaker = {
+    name: "fetch-ingredients-baker",
+    text: "select * from get_all_ingrediants_baker ()",
+  };
+  client.query(ingredientsQueryBaker, (err, res) => {
+    response.send({
+      ingredientsData: res.rows,
     });
   });
 });
