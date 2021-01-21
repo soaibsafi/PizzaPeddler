@@ -16,9 +16,13 @@
 
         <form id="pizza-size">
           <label for="cars">Choose Pizza Size:</label>
-
+        
           <select name="pizzaname" id="p_id">
-             <option value={{p_id}}>{{pizzaname}}</option>
+              <option>Choose color</option>
+      {{#each pizzaSize}}
+      <option id="display-pizza" value={{pizzaname}}</option>
+      {{/each}}
+          
           </select>
           <br><br>
           <input type="submit" value="Submit">

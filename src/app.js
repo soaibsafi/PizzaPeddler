@@ -97,7 +97,7 @@ app.get('/user',(request,response)=>{
     }
 
     client.query(query, (err, res) => {
-        client.end()
+        //client.end()
         response.render('customer',{
             username: res.rows[0]['name']
         })
@@ -113,12 +113,11 @@ app.get('/getPizzaSize',(request,response)=>{
 
     client.query(query, (err, res) => {
         console.log(res.rows);
-
+        //client.end()
+        
         response.send({
             pizzaData:res.rows
         })
-
-        client.end()
     })
 
 })
