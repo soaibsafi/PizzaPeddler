@@ -77,7 +77,7 @@ function AddIngredients(ingredientID) {
         response.json().then((data) => {
 
             console.log(totalPrice);
-            totalPrice = (totalPrice ? totalPrice : 0 ) + (1 * parseFloat(data.ingredientData[0].price));
+            totalPrice = (totalPrice ? totalPrice : 0) + (1 * parseFloat(data.ingredientData[0].price));
             var body = orderCartTBL;
             var tbl = document.createElement("table");
             var tblBody = document.createElement("tbody");
@@ -97,7 +97,7 @@ function AddIngredients(ingredientID) {
                         cellText = document.createTextNode(data.ingredientData[0].price);
                         break;
                     case 2:
-                        var values = ["1","2","3"];
+                        var values = ["1", "2", "3"];
 
                         cellText = document.createElement("select");
                         cellText.name = "Quantity";
@@ -132,7 +132,7 @@ function AddIngredients(ingredientID) {
 
 }
 
-function UpdateTotalPrice(){
+function UpdateTotalPrice() {
     var myVar = document.getElementById('Quantity').value;
 
     console.log(myVar);
