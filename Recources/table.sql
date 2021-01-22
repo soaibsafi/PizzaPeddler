@@ -91,3 +91,19 @@ INSERT INTO supplier(name, visibility)
 VALUES('Kowshik', True);
 INSERT INTO supplier(name, visibility)
 VALUES('Rizvee', False);
+
+--- cart table
+
+CREATE TABLE cart(
+  o_id VARCHAR(255),
+  quantity INTEGER NOT NULL,
+  price MONEY NOT NULL,
+  c_id INTEGER NOT NULL,
+  p_id INTEGER,
+  i_id INTEGER,
+  total_price MONEY NOT NULL,
+  CONSTRAINT fk_customer FOREIGN KEY(c_id) REFERENCES customer(c_id),
+  CONSTRAINT fk_pizza FOREIGN KEY(p_id) REFERENCES pizza(p_id),
+  CONSTRAINT fk_ingredients FOREIGN KEY(i_id) REFERENCES ingredients(i_id),
+  PRIMARY KEY (o_id, p_id, i_id)
+);

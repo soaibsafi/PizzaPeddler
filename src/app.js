@@ -179,6 +179,41 @@ app.get("/getAllIngredientsForBaker", (request, response) => {
   });
 });
 
+app.get("/checkDuplicateIngredientsInCart", (request, response) => {
+  let ingredientsQueryBaker = {
+    name: "check-duplicate-ingredients-cart",
+    text: "select * from check_ingredient_in_cart($1,$2,$3)",
+    values: [request.query.oid,
+      parseInt(request.query.iID),
+      parseInt(request.query.cid)]
+  };
+  client.query(ingredientsQueryBaker, (err, res) => {
+    response.send({
+      checkIngredientsData: res.rows,
+    });
+  });
+});
+
+app.get("/saveIngredientsInCart",(request,response) => {
+  var saveInCartQuery = {
+    name: "save-ingredient-in-cart",
+    text: "select * from temp_save_order_in_cart($1,$2,$3,$4,$5,$6)",
+    values:[parseInt(request.query.pid),
+      parseInt(request.query.cid),
+      parseInt(request.query.ingID),
+      request.query.oID,
+      parseInt(request.query.qty),
+      parseFloat(request.query.price)]
+  };
+
+  client.query(saveInCartQuery, (err, res) => {
+    console.log(res)
+    response.send({
+      cartData: res.rows,
+    });
+  });
+})
+
 
 // Server
 app.get("/getIngredientInfo", (request, response) => {
@@ -189,6 +224,7 @@ app.get("/getIngredientInfo", (request, response) => {
     values:[parseInt(request.query.id)]
   };
   client.query(ingredientsQuery, (err, res) => {
+    console.log(res)
     response.send({
       ingredientData: res.rows,
     });

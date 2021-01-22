@@ -238,6 +238,8 @@ select *
 from get_baker(2);
 
 
+
+
 -- Check if the ingredient exist in the cart table
 CREATE OR REPLACE FUNCTION check_ingredient_in_cart(oid VARCHAR,
                                                     iid INTEGER,

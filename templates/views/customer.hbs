@@ -17,7 +17,7 @@
     <p>Order your pizza from here</p>
 
       <label for="pizzaSize">Choose Pizza Size:</label>
-      <select name="pizzaname" id="pizzaDDL">
+      <select name="pizzaname" id="pizzaDDL" onchange="pizzaSizeChange()">
         <option value=''>Select a pizza size</option>
       </select>
       <br/><br/>
@@ -28,6 +28,7 @@
       </div>
       <br/><br/>
       <label for="total" id="totalPriceLBL">Total Price:</label>
+<!--      <label for="orderID" id="orderID"></label>-->
       <label for="totalAmount" id="totalPriceAmountLBL">0</label>
       <button type="button" id="submitBTN">Order it!</button>
 
