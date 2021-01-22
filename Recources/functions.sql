@@ -194,7 +194,7 @@ CREATE OR REPLACE FUNCTION get_ingrediant(id INTEGER)
             (
                 i_id   integer,
                 i_name TEXT,
-                price  MONEY
+                price  numeric
             )
 AS
 $$
@@ -206,8 +206,8 @@ BEGIN
                        ' (',
                        ingredients.regional_provinance,
                        ')'
-                   )                  as i_name,
-               ingredients.unit_price as price
+                   )                           as i_name,
+               ingredients.unit_price::numeric as price
         FROM public.ingredients
         WHERE ingredients.i_id = id;
 END;
@@ -258,4 +258,65 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT * FROM check_ingredient_in_cart('22012021210415', 5, 5);
+SELECT *
+FROM check_ingredient_in_cart('22012021210415', 5, 5);
+
+
+-- save data in cart table
+CREATE OR REPLACE FUNCTION save_order_in_cart(pid INTEGER,
+                                              cid INTEGER,
+                                              iid INTEGER,
+                                              oid VARCHAR,
+                                              qty INTEGER,
+                                              price numeric)
+    RETURNS TABLE
+            (
+                o_id       VARCHAR,
+                i_name     TEXT,
+                unit_price MONEY,
+                totalprice MONEY
+            )
+AS
+$$
+DECLARE
+    orderid VARCHAR;
+
+BEGIN
+    IF oid = '' THEN
+        SELECT TO_CHAR(NOW(), 'DDMMYYYYHH24MISS') INTO orderid;
+    ELSE
+        orderid = oid;
+    END IF;
+
+    INSERT INTO cart (p_id, c_id, o_id, i_id, quantity, price, total_price)
+    values (pid, cid, orderid, iid, qty, price::money, qty * price);
+
+    RETURN QUERY
+        select cart.o_id             AS o_id,
+               CONCAT
+                   (
+                       (SELECT ingredients.name
+                        FROM ingredients
+                        where ingredients.i_id = iid), ' (',
+                       (SELECT ingredients.regional_provinance
+                        FROM ingredients
+                        where ingredients.i_id = iid),
+                       ')'
+                   )
+                                     as i_name,
+               (SELECT ingredients.unit_price as unit_price
+                FROM ingredients
+                where ingredients.i_id = iid),
+               SUM(cart.total_price) AS totalprice
+        FROM public.cart
+        WHERE cart.o_id = orderid
+        GROUP BY cart.o_id;
+
+END;
+$$ LANGUAGE plpgsql;
+
+select *
+from save_order_in_cart(1, 2, 4, '', 1, 4.00)
+
+
+
