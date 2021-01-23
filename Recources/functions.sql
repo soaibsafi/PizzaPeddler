@@ -320,20 +320,19 @@ select *
 from save_order_in_cart(1, 2, 4, '', 1, 4.00)
 
 -- update pizza id in cart table
-CREATE OR REPLACE FUNCTION update_pizza_id(
-         pid INTEGER,
-         oid VARCHAR
-    ) RETURNS integer AS $$
+CREATE OR REPLACE FUNCTION update_pizza_id(pid INTEGER,
+                                           oid VARCHAR) RETURNS integer AS
+$$
 DECLARE
-  value integer;
+    value integer;
 
 BEGIN
-WITH d as (
- UPDATE cart
- set p_id = pid
- WHERE o_id = oid
- RETURNING *
- )
+    WITH d as (
+        UPDATE cart
+            set p_id = pid
+            WHERE o_id = oid
+            RETURNING *
+    )
     SELECT count(*)
     INTO value
     FROM d;
@@ -345,38 +344,47 @@ $$ LANGUAGE plpgsql;
 -- select * from update_pizza_id (3, '23012021101814')
 
 -- update ingredient qty in cart table
-CREATE OR REPLACE FUNCTION update_ingredient_qty(
-         pid INTEGER,
-         cid INTEGER,
-         iid INTEGER,
-         oid VARCHAR,
-         qty INTEGER
-    ) RETURNS VOID AS $$
+CREATE OR REPLACE FUNCTION update_ingredient_qty(pid INTEGER,
+                                                 cid INTEGER,
+                                                 iid INTEGER,
+                                                 oid VARCHAR,
+                                                 qty INTEGER) RETURNS INTEGER AS
+$$
 
 DECLARE
-  tempPrice money;
+    tempPrice money;
+    value INTEGER;
 
 BEGIN
-  select price into tempPrice from cart where
-  o_id = oid and
-  i_id = iid and
-  p_id = pid and
-  c_id = cid;
+    select price
+    into tempPrice
+    from cart
+    where o_id = oid
+      and i_id = iid
+      and p_id = pid
+      and c_id = cid;
 
-  tempPrice = tempPrice * qty;
-
- UPDATE cart
- set quantity = qty,
- total_price = tempPrice
- WHERE o_id = oid and
- i_id = iid and
- p_id = pid and
- c_id = cid;
+    tempPrice = tempPrice * qty;
+    WITH d as (
+        UPDATE cart
+            set quantity = qty,
+                total_price = tempPrice
+            WHERE o_id = oid
+                and i_id = iid
+                and p_id = pid
+                and c_id = cid
+            RETURNING *
+    )
+    SELECT count(*)
+    INTO value
+    FROM d;
+    RETURN value;
 
 END;
 $$ LANGUAGE plpgsql;
 
-select * from update_ingredient_qty (3,1,9, '23012021101814',3)
+select *
+from update_ingredient_qty(1, 1, 2, '23012021115857', 16)
 
 
 
@@ -410,3 +418,55 @@ $$ LANGUAGE plpgsql;
 
 select *
 from remove_item_from_cart('22012021222912', 1, 2, 1);
+
+
+-- Procedure  for deleting items from cart when that item is being inserted into order.
+CREATE
+    OR REPLACE FUNCTION remove_item_on_order_insert()
+    RETURNS trigger AS
+$$
+BEGIN
+    DELETE
+    FROM cart
+    WHERE cart.o_id = NEW.o_id;
+
+    RETURN NEW;
+
+END;
+$$
+    LANGUAGE 'plpgsql';
+
+
+-- Trigger to call removing item from cart after inserting into order
+CREATE TRIGGER order_insert_trigger
+    AFTER INSERT
+    ON "order"
+    FOR EACH ROW
+EXECUTE PROCEDURE remove_item_on_order_insert();
+
+
+-- Procedure to add item from cart to order
+CREATE OR REPLACE FUNCTION add_from_cart_to_order(oid VARCHAR)
+    RETURNS varchar
+AS
+$$
+DECLARE
+    value INTEGER;
+BEGIN
+    WITH d as (
+        INSERT INTO "order" (o_id, quantity, price, c_id, p_id, i_id)
+            SELECT o_id, quantity, price, c_id, p_id, i_id
+            FROM cart
+            WHERE cart.o_id = oid
+            RETURNING *
+    )
+    SELECT count(*)
+    INTO value
+    FROM d;
+    RETURN format('Pizza with %s ingredients has successfully ordered.', value);
+
+END;
+$$ LANGUAGE plpgsql;
+
+select *
+from add_from_cart_to_order('23012021115743');
