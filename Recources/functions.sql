@@ -320,20 +320,19 @@ select *
 from save_order_in_cart(1, 2, 4, '', 1, 4.00)
 
 -- update pizza id in cart table
-CREATE OR REPLACE FUNCTION update_pizza_id(
-         pid INTEGER,
-         oid VARCHAR
-    ) RETURNS integer AS $$
+CREATE OR REPLACE FUNCTION update_pizza_id(pid INTEGER,
+                                           oid VARCHAR) RETURNS integer AS
+$$
 DECLARE
-  value integer;
+    value integer;
 
 BEGIN
-WITH d as (
- UPDATE cart
- set p_id = pid
- WHERE o_id = oid
- RETURNING *
- )
+    WITH d as (
+        UPDATE cart
+            set p_id = pid
+            WHERE o_id = oid
+            RETURNING *
+    )
     SELECT count(*)
     INTO value
     FROM d;
@@ -345,38 +344,47 @@ $$ LANGUAGE plpgsql;
 -- select * from update_pizza_id (3, '23012021101814')
 
 -- update ingredient qty in cart table
-CREATE OR REPLACE FUNCTION update_ingredient_qty(
-         pid INTEGER,
-         cid INTEGER,
-         iid INTEGER,
-         oid VARCHAR,
-         qty INTEGER
-    ) RETURNS VOID AS $$
+CREATE OR REPLACE FUNCTION update_ingredient_qty(pid INTEGER,
+                                                 cid INTEGER,
+                                                 iid INTEGER,
+                                                 oid VARCHAR,
+                                                 qty INTEGER) RETURNS INTEGER AS
+$$
 
 DECLARE
-  tempPrice money;
+    tempPrice money;
+    value INTEGER;
 
 BEGIN
-  select price into tempPrice from cart where
-  o_id = oid and
-  i_id = iid and
-  p_id = pid and
-  c_id = cid;
+    select price
+    into tempPrice
+    from cart
+    where o_id = oid
+      and i_id = iid
+      and p_id = pid
+      and c_id = cid;
 
-  tempPrice = tempPrice * qty;
-
- UPDATE cart
- set quantity = qty,
- total_price = tempPrice
- WHERE o_id = oid and
- i_id = iid and
- p_id = pid and
- c_id = cid;
+    tempPrice = tempPrice * qty;
+    WITH d as (
+        UPDATE cart
+            set quantity = qty,
+                total_price = tempPrice
+            WHERE o_id = oid
+                and i_id = iid
+                and p_id = pid
+                and c_id = cid
+            RETURNING *
+    )
+    SELECT count(*)
+    INTO value
+    FROM d;
+    RETURN value;
 
 END;
 $$ LANGUAGE plpgsql;
 
-select * from update_ingredient_qty (3,1,9, '23012021101814',3)
+select *
+from update_ingredient_qty(1, 1, 2, '23012021115857', 16)
 
 
 
@@ -460,4 +468,5 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-select * from add_from_cart_to_order('23012021115743');
+select *
+from add_from_cart_to_order('23012021115743');

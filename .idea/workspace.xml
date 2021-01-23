@@ -25,11 +25,12 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31d8681a-7ac3-4d83-825e-f25b35626a4a" name="Default Changelist" comment="Add (function) - remove_ingredient_from_cart()">
-      <change afterPath="$PROJECT_DIR$/Recources/temp.sql" afterDir="false" />
+    <list default="true" id="31d8681a-7ac3-4d83-825e-f25b35626a4a" name="Default Changelist" comment="Add (function) - Trigger for order-cart">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Recources/functions.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Recources/functions.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Recources/table.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Recources/table.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Recources/temp.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Recources/temp.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/customer.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/customer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,7 +182,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611396616996</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Add (function) - Trigger for order-cart">
+      <created>1611400270987</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1611400270987</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -220,6 +228,7 @@
     <MESSAGE value="Add (baker) - Get ingredients for baker" />
     <MESSAGE value="Add (function) - check_ingredient_in_cart()" />
     <MESSAGE value="Add (function) - remove_ingredient_from_cart()" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add (function) - remove_ingredient_from_cart()" />
+    <MESSAGE value="Add (function) - Trigger for order-cart" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add (function) - Trigger for order-cart" />
   </component>
 </project>
