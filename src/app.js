@@ -128,7 +128,7 @@ app.get("/getPizzaSize", (request, response) => {
     text: "select * from get_all_pizza_size()",
   };
   client.query(pizzaquery, (err, res) => {
-    // console.log(res);
+
     response.send({
       pizzaData: res.rows,
     });
@@ -207,7 +207,6 @@ app.get("/saveIngredientsInCart",(request,response) => {
   };
 
   client.query(saveInCartQuery, (err, res) => {
-    console.log(res)
     response.send({
       cartData: res.rows,
     });
@@ -224,12 +223,28 @@ app.get("/getIngredientInfo", (request, response) => {
     values:[parseInt(request.query.id)]
   };
   client.query(ingredientsQuery, (err, res) => {
-    console.log(res)
     response.send({
       ingredientData: res.rows,
     });
   });
 });
+
+app.get("/updatePizzaId", (request, response) => {
+    var pizzaIdUpdateQuery = {
+    name: "update-pizza-id-cart",
+    text: "select * from update_pizza_id($1,$2)",
+    values:[parseInt(request.query.pid),
+      request.query.oid]
+  };
+  client.query(pizzaIdUpdateQuery, (err, res) => {
+    console.log(res)
+    response.send({
+      updateData: res
+    });
+  });
+});
+
+
 
 app.listen(3000, () => {
   console.log("Server is up on port 3000");
