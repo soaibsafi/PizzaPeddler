@@ -75,12 +75,7 @@ CREATE TABLE "order"(
   CONSTRAINT fk_ingredients FOREIGN KEY(i_id) REFERENCES ingredients(i_id),
   PRIMARY KEY (o_id, p_id, i_id)
 );
-INSERT INTO "order"(name, quantity, price, c_id, p_id)
-VALUES('1501212131', 2, 9.5, 1, 1);
-INSERT INTO "order"(name, quantity, price, c_id, p_id)
-VALUES('1501212132', 3, 6, 1, 2);
-INSERT INTO "order"(name, quantity, price, c_id, p_id)
-VALUES('1501212133', 1, 2, 2, 3);
+
 -- supplier
 CREATE TABLE supplier(
   s_id SERIAL NOT NULL PRIMARY KEY,
