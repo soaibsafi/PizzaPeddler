@@ -183,7 +183,7 @@ function ChangeQty(id) {
   var ddlID = id.split("_");
 
   var oid = ddlID[1];
-  var pid = ddlID[2];
+  var pid = pizzaDDL.value;;
   var cid = ddlID[3];
   var iid = ddlID[4];
 
@@ -201,7 +201,7 @@ function Removerow(id) {
   res = tblID.split("_");
 
   var oid = res[0];
-  var pid = res[1];
+  var pid = pizzaDDL.value;;
   var cid = res[2];
   var iid = res[3];
 
@@ -219,6 +219,9 @@ function Removerow(id) {
 
 function pizzaSizeChange() {
   var pizzaid = pizzaDDL.value;
+
+  console.log(pizzaid);
+
   var orderId = order_ID.id;
   if (orderId) {
 

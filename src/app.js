@@ -237,7 +237,6 @@ app.get("/updatePizzaId", (request, response) => {
       request.query.oid]
   };
   client.query(pizzaIdUpdateQuery, (err, res) => {
-    console.log(res)
     response.send({
       updateData: res.rows
     });
@@ -255,7 +254,6 @@ app.get("/removeIngredientsFromCart", (request, response) => {
     ]
   };
   client.query(pizzaIdUpdateQuery, (err, res) => {
-    console.log(res)
     response.send({
       removedData: res.rows
     });

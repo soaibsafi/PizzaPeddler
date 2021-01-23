@@ -353,7 +353,8 @@ CREATE OR REPLACE FUNCTION update_ingredient_qty(pid INTEGER,
                                                  cid INTEGER,
                                                  iid INTEGER,
                                                  oid VARCHAR,
-                                                 qty INTEGER) RETURNS money AS
+                                                 qty INTEGER)
+            RETURNS money AS
 $$
 
 DECLARE

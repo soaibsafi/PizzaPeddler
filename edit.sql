@@ -1,31 +1,25 @@
 -- update pizza id in cart table
-CREATE OR REPLACE FUNCTION update_pizza_id(
-         pid INTEGER,
-         oid VARCHAR
-    ) RETURNS integer AS $$
+CREATE OR REPLACE FUNCTION update_pizza_id(pid INTEGER,
+                                           oid VARCHAR)
+                                           RETURNS money AS
+$$
 DECLARE
-  value integer;
+    value money;
+    pizza_price money;
 
 BEGIN
-WITH d as (
- UPDATE cart
- set p_id = pid
- WHERE o_id = oid
- RETURNING *
- )
-    SELECT count(*)
-    INTO value
-    FROM d;
+     select price into pizza_price from pizza where p_id = pid;
+
+        UPDATE cart
+            set p_id = pid, p_price = pizza_price
+            WHERE o_id = oid;
+
+
+    select (sum(total_price) + p_price) into value from cart where o_id = oid
+    group by p_price;
     RETURN value;
 
 END;
 $$ LANGUAGE plpgsql;
 
 -- select * from update_pizza_id (3, '23012021101814')
---
---
---  UPDATE cart
---  set p_id = 4
---  WHERE o_id = '23012021112618'
---
--- RETURNING *;
