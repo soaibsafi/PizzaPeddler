@@ -1,104 +1,52 @@
--- noinspection SqlNoDataSourceInspectionForFile
-
-CREATE
-    OR REPLACE FUNCTION remove_item_on_order_insert()
-    RETURNS trigger AS
-$$
-BEGIN
-    DELETE
-    FROM cart
-    WHERE cart.o_id = NEW.o_id;
-
-    RETURN NEW;
-
-END;
-$$
-LANGUAGE 'plpgsql';
-
-
-
-CREATE TRIGGER order_insert_trigger
-    AFTER INSERT
-    ON "order"
-    FOR EACH ROW
-    EXECUTE PROCEDURE remove_item_on_order_insert();
-
-
-
-CREATE OR REPLACE FUNCTION add_from_cart_to_order(oid VARCHAR)
-    RETURNS varchar
-AS
+-- remove ingredient
+CREATE OR REPLACE FUNCTION delete_ingredients(iid INTEGER)
+    RETURNS INTEGER AS
 $$
 DECLARE
-    value INTEGER;
+    cart_iid INTEGER;
+    order_iid INTEGER;
+    res INTEGER;
+
 BEGIN
-    WITH d as (
-        INSERT INTO "order" (o_id, quantity, price, c_id, p_id, i_id)
-            SELECT o_id, quantity, price, c_id, p_id, i_id
-            FROM cart
-            WHERE cart.o_id = oid
-            RETURNING *
-    )
-    SELECT count(*)
-    INTO value
-    FROM d;
-    RETURN format('Pizza with %s ingredients has successfully ordered.', value);
+
+    select COUNT (i_id) into cart_iid from cart where i_id = iid;
+    select COUNT(i_id) into order_iid from "order" where i_id = iid;
+
+    IF cart_iid = 0 AND order_iid = 0
+    THEN
+        WITH d as (
+        delete from ingredients where i_id = iid
+        returning *)
+        SELECT count(*)
+        INTO res
+        FROM d;
+        RETURN res;
+--     RETURN 'Deleted';
+
+        ELSE
+        res = 0;
+        RETURN res;
+--     RETURN 'This data is existed in cart or order table';
+
+    END IF;
+
 
 END;
 $$ LANGUAGE plpgsql;
 
-select * from add_from_cart_to_order('23012021115743');
-
----  -- --------------------
-
+-- select * from  delete_ingredients(2)
+-- select * from  delete_ingredients(2)
 
 
--- Procedure  for deleting items from cart when that item is being inserted into order.
-CREATE
-    OR REPLACE FUNCTION remove_item_on_order_insert()
-    RETURNS trigger AS
-$$
-BEGIN
-    DELETE
-    FROM cart
-    WHERE cart.o_id = NEW.o_id;
-
-    RETURN NEW;
-
-END;
-$$
-    LANGUAGE 'plpgsql';
-
-
--- Trigger to call removing item from cart after inserting into order
-    CREATE TRIGGER order_insert_trigger
-    AFTER INSERT
-    ON "order"
-    FOR EACH ROW
-    EXECUTE PROCEDURE remove_item_on_order_insert();
-
-
--- Procedure to add item from cart to order
-CREATE OR REPLACE FUNCTION add_from_cart_to_order(oid VARCHAR)
-    RETURNS varchar
-AS
+CREATE OR REPLACE FUNCTION delete_ingredients(iid INTEGER, name VARCHAR, )
+    RETURNS varchar AS
 $$
 DECLARE
-    value INTEGER;
+    res INTEGER;
+
 BEGIN
-    WITH d as (
-        INSERT INTO "order" (o_id, quantity, price, c_id, p_id, i_id)
-            SELECT o_id, quantity, price, c_id, p_id, i_id
-            FROM cart
-            WHERE cart.o_id = oid
-            RETURNING *
-    )
-    SELECT count(*)
-    INTO value
-    FROM d;
-    RETURN format('Pizza with %s ingredients has successfully ordered.', value);
+
+
 
 END;
 $$ LANGUAGE plpgsql;
-
-select * from add_from_cart_to_order('23012021115743');
