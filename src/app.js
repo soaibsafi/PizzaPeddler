@@ -263,6 +263,26 @@ app.get("/removeIngredientsFromCart", (request, response) => {
 });
 
 
+app.get("/updateIngredientQtyinCart", (request, response) => {
+  var ingerdientQtyQuery = {
+    name: "update-ingredient-qty-incart",
+    text: "select * from test_i($1,$2,$3,$4,$5)",
+    values:[parseInt(request.query.pid),
+      parseInt(request.query.cid),
+      parseInt(request.query.iid),
+      request.query.oid,
+      parseInt(request.query.qty)
+    ]
+  };
+  client.query(ingerdientQtyQuery, (err, res) => {
+    console.log(res)
+    response.send({
+      updateData: res
+    });
+  });
+});
+
+
 
 app.listen(3000, () => {
   console.log("Server is up on port 3000");

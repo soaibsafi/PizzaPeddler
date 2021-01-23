@@ -137,8 +137,8 @@ function AddIngredients(ingredientID) {
 
                         cellText = document.createElement("select");
                         cellText.name = "Quantity";
-                        cellText.id = "Quantity";
-                        cellText.setAttribute("onchange", "ChangeQty()");
+                        cellText.id = "Quantity_"+uniqueid;
+                        cellText.setAttribute("onchange", "ChangeQty(this.id)");
 
                         for (const val of values) {
                           var option = document.createElement("option");
@@ -179,8 +179,27 @@ function AddIngredients(ingredientID) {
   else alert("Please select a pizza size")
 }
 
-function ChangeQty(){
-  console.log("I am from qty change");
+function ChangeQty(id){
+
+  console.log(id.value);
+
+  var qty = document.getElementById(id).value;
+  ///console.log(myVar);
+
+  var ddlID = id.split("_");
+
+  var oid = ddlID[1];
+  var pid = ddlID[2];
+  var cid = ddlID[3];
+  var iid = ddlID[4];
+
+  fetch("http://localhost:3000/updateIngredientQtyinCart?oid=" + oid +"&pid="+pid+"&iid="+iid+"&cid="+cid+"&qty="+qty).then((checkResponse) => {
+    checkResponse.json().then((data) => {
+
+
+    });
+  });
+
 }
 
 function Removerow(id){
