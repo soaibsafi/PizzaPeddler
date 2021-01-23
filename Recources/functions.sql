@@ -323,19 +323,26 @@ from save_order_in_cart(1, 2, 4, '', 1, 4.00)
 CREATE OR REPLACE FUNCTION update_pizza_id(
          pid INTEGER,
          oid VARCHAR
-    ) RETURNS VOID AS $$
+    ) RETURNS integer AS $$
 DECLARE
-  orderid VARCHAR;
+  value integer;
 
 BEGIN
+WITH d as (
  UPDATE cart
  set p_id = pid
- WHERE o_id = oid;
+ WHERE o_id = oid
+ RETURNING *
+ )
+    SELECT count(*)
+    INTO value
+    FROM d;
+    RETURN value;
 
 END;
 $$ LANGUAGE plpgsql;
 
-select * from update_pizza_id (3, '23012021101814')
+-- select * from update_pizza_id (3, '23012021101814')
 
 -- update ingredient qty in cart table
 CREATE OR REPLACE FUNCTION update_ingredient_qty(
