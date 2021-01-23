@@ -239,7 +239,6 @@ from get_baker(2);
 
 
 
-
 -- Check if the ingredient exist in the cart table
 CREATE OR REPLACE FUNCTION check_ingredient_in_cart(oid VARCHAR,
                                                     iid INTEGER,
@@ -374,4 +373,33 @@ select * from update_ingredient_qty (3,1,9, '23012021101814',3)
 
 
 
+-- Remove item from cart
+CREATE OR REPLACE FUNCTION remove_item_from_cart(oid VARCHAR,
+                                                 pid INTEGER,
+                                                 iid INTEGER,
+                                                 cid INTEGER)
+    RETURNS integer
+AS
+$$
+DECLARE
+    value INTEGER;
+BEGIN
+    WITH d as (
+        DELETE
+            FROM cart
+                WHERE cart.o_id = oid
+                    AND cart.p_id = pid
+                    AND cart.i_id = iid
+                    AND cart.c_id = cid
+                RETURNING *
+    )
+    SELECT count(*)
+    INTO value
+    FROM d;
+    RETURN value;
 
+END;
+$$ LANGUAGE plpgsql;
+
+select *
+from remove_item_from_cart('22012021222912', 1, 2, 1);
