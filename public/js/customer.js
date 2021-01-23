@@ -105,7 +105,6 @@ function AddIngredients(ingredientID) {
               fetch("http://localhost:3000/saveIngredientsInCart?pid=" + pizzaID + "&cid=" + custID + "&ingID=" + ingreID + "&oID=" + orderID + "&qty=" + qty + "&price=" + price).then((savedIngredientResponse) => {
                 savedIngredientResponse.json().then((data) => {
                   order_ID.setAttribute("id", data.cartData[0].o_id);
-                  ///console.log(order_ID);
 
                   var uniqueid = order_ID.id + "_" + pizzaID + "_" + custID + "_" + ingreID
 
@@ -180,10 +179,11 @@ function AddIngredients(ingredientID) {
 
 function ChangeQty(id) {
   var qty = document.getElementById(id).value;
+
   var ddlID = id.split("_");
 
   var oid = ddlID[1];
-  var pid = pizzaDDL.value;;
+  var pid = pizzaDDL.value;
   var cid = ddlID[3];
   var iid = ddlID[4];
 
@@ -198,10 +198,11 @@ function ChangeQty(id) {
 
 function Removerow(id) {
   var tblID = id.substring(7);
+
   res = tblID.split("_");
 
   var oid = res[0];
-  var pid = pizzaDDL.value;;
+  var pid = pizzaDDL.value;
   var cid = res[2];
   var iid = res[3];
 
@@ -219,8 +220,6 @@ function Removerow(id) {
 
 function pizzaSizeChange() {
   var pizzaid = pizzaDDL.value;
-
-  console.log(pizzaid);
 
   var orderId = order_ID.id;
   if (orderId) {
@@ -246,6 +245,7 @@ confirmOrderBtn.addEventListener("click", (e) => {
     checkResponse.json().then((data) => {
       //console.log(data)
       alert(data.confirmOrderData[0].add_from_cart_to_order);
+      window.location.reload();
     });
   });
   }
