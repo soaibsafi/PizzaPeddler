@@ -197,7 +197,7 @@ app.get("/checkDuplicateIngredientsInCart", (request, response) => {
 app.get("/saveIngredientsInCart",(request,response) => {
   var saveInCartQuery = {
     name: "save-ingredient-in-cart",
-    text: "select * from temp_save_order_in_cart($1,$2,$3,$4,$5,$6)",
+    text: "select * from t_save_order_in_cart($1,$2,$3,$4,$5,$6)",
     values:[parseInt(request.query.pid),
       parseInt(request.query.cid),
       parseInt(request.query.ingID),

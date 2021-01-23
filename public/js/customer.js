@@ -109,16 +109,19 @@ function AddIngredients(ingredientID) {
                   order_ID.setAttribute("id",data.cartData[0].o_id);
                   ///console.log(order_ID);
 
+                  var uniqueid = order_ID.id+"_"+pizzaID+"_"+custID+"_"+ingreID
+
                   console.log(totalPrice);
-                  totalPrice = (totalPrice ? totalPrice : 0) + (1 * parseFloat(data.cartData[0].price));
+                  totalPrice = (totalPrice ? totalPrice : 0) + (1 * parseFloat(data.cartData[0].unit_price));
                   var body = orderCartTBL;
                   var tbl = document.createElement("table");
                   var tblBody = document.createElement("tbody");
+                  tbl.setAttribute("id",uniqueid);
 
 
                   var row = document.createElement("tr");
 
-                  for (var j = 0; j < 3; j++) {
+                  for (var j = 0; j < 4; j++) {
                     var cell = document.createElement("td");
                     var cellText;
 
@@ -127,7 +130,7 @@ function AddIngredients(ingredientID) {
                         cellText = document.createTextNode(data.cartData[0].i_name);
                         break;
                       case 1:
-                        cellText = document.createTextNode(data.cartData[0].price);
+                        cellText = document.createTextNode(data.cartData[0].unit_price);
                         break;
                       case 2:
                         var values = ["1", "2", "3"];
@@ -135,7 +138,7 @@ function AddIngredients(ingredientID) {
                         cellText = document.createElement("select");
                         cellText.name = "Quantity";
                         cellText.id = "Quantity";
-                        cellText.onchange = "UpdateTotalPrice()";
+                        cellText.setAttribute("onchange", "ChangeQty()");
 
 
                         for (const val of values) {
@@ -147,6 +150,15 @@ function AddIngredients(ingredientID) {
                         }
 
                         break;
+                      case 3:
+
+                        cellText = document.createElement("button");
+                        cellText.setAttribute("id","remove"+uniqueid)
+                        cellText.setAttribute("onclick","Removerow(this.id)");
+                        var btnText = document.createTextNode("X");
+                        cellText.appendChild(btnText);
+
+
                     }
 
                     cell.appendChild(cellText);
@@ -170,6 +182,14 @@ function AddIngredients(ingredientID) {
         });
     });
   else alert("Please select a pizza size")
+}
+
+function ChangeQty(){
+  console.log("I am from qty change");
+}
+
+function Removerow(id){
+  console.log(id);
 }
 
 function pizzaSizeChange(){
