@@ -1,12 +1,12 @@
 console.log("Customer js file loaded");
 
 const pizzaDDL = document.querySelector("#pizzaDDL");
-const submitBTN = document.querySelector("#submitBTN");
+const confirmOrderBtn = document.querySelector("#confirmOrderBtn");
 const ingredientsTBL = document.querySelector("#ingredientsTBL");
 const orderCartTBL = document.querySelector("#orderCartTBL");
 const totalPriceAmountLBL = document.querySelector("#totalPriceAmountLBL");
 var order_ID = document.createElement("label");
-order_ID.setAttribute("id", "")
+order_ID.setAttribute("id", "")  //track order id
 
 
 window.onload = (event) => {
@@ -239,9 +239,19 @@ function UpdateTotalPrice() {
   console.log(myVar);
 }
 
-submitBTN.addEventListener("click", (e) => {
-  console.log(pizzaDDL.value);
-
+confirmOrderBtn.addEventListener("click", (e) => {
+  if(order_ID.id){
+  //console.log(pizzaDDL.value);
+  fetch("http://localhost:3000/confirmOrder?id=" + order_ID.id).then((checkResponse) => {
+    checkResponse.json().then((data) => {
+      //console.log(data)
+      alert(data.confirmOrderData[0].add_from_cart_to_order);
+    });
+  });
+  }
+  else{
+    alert("You haven't select any ingredient(s).")
+  }
 });
 
 

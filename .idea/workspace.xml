@@ -26,6 +26,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="31d8681a-7ac3-4d83-825e-f25b35626a4a" name="Default Changelist" comment="Add(Functionality) - change ingredients qty in cart (locally and in server)">
+    <list default="true" id="31d8681a-7ac3-4d83-825e-f25b35626a4a" name="Default Changelist" comment="">
+    <list default="true" id="31d8681a-7ac3-4d83-825e-f25b35626a4a" name="Default Changelist" comment="Update (function) - change return type qty change">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Recources/functions.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Recources/functions.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/edit.sql" beforeDir="false" afterPath="$PROJECT_DIR$/edit.sql" afterDir="false" />
@@ -73,7 +75,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />

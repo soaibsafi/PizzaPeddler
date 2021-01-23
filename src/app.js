@@ -280,6 +280,21 @@ app.get("/updateIngredientQtyinCart", (request, response) => {
 });
 
 
+app.get("/confirmOrder", (request, response) => {
+
+  var confirmOrderQuery = {
+    name: "confirm-order",
+    text: "select * from add_from_cart_to_order($1)",
+    values: [request.query.id]
+  };
+  client.query(confirmOrderQuery, (err, res) => {
+    response.send({
+      confirmOrderData: res.rows,
+    });
+  });
+});
+
+
 app.listen(3000, () => {
   console.log("Server is up on port 3000");
 });
