@@ -320,5 +320,58 @@ $$ LANGUAGE plpgsql;
 select *
 from save_order_in_cart(1, 2, 4, '', 1, 4.00)
 
+-- update pizza id in cart table
+CREATE OR REPLACE FUNCTION update_pizza_id(
+         pid INTEGER,
+         oid VARCHAR
+    ) RETURNS VOID AS $$
+DECLARE
+  orderid VARCHAR;
+
+BEGIN
+ UPDATE cart
+ set p_id = pid
+ WHERE o_id = oid;
+
+END;
+$$ LANGUAGE plpgsql;
+
+select * from update_pizza_id (3, '23012021101814')
+
+-- update ingredient qty in cart table
+CREATE OR REPLACE FUNCTION update_ingredient_qty(
+         pid INTEGER,
+         cid INTEGER,
+         iid INTEGER,
+         oid VARCHAR,
+         qty INTEGER
+    ) RETURNS VOID AS $$
+
+DECLARE
+  tempPrice money;
+
+BEGIN
+  select price into tempPrice from cart where
+  o_id = oid and
+  i_id = iid and
+  p_id = pid and
+  c_id = cid;
+
+  tempPrice = tempPrice * qty;
+
+ UPDATE cart
+ set quantity = qty,
+ total_price = tempPrice
+ WHERE o_id = oid and
+ i_id = iid and
+ p_id = pid and
+ c_id = cid;
+
+END;
+$$ LANGUAGE plpgsql;
+
+select * from update_ingredient_qty (3,1,9, '23012021101814',3)
+
+
 
 

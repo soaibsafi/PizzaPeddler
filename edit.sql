@@ -1,26 +1,33 @@
-CREATE OR REPLACE FUNCTION save_order_in_cart(
-        pid INTEGER,
-        cid INTEGER,
-        iid INTEGER,
-        oid VARCHAR,
-        qty INTEGER,
-        price numeric
-
+-- update ingredient qty in cart table
+CREATE OR REPLACE FUNCTION update_ingredient_qty(
+         pid INTEGER,
+         cid INTEGER,
+         iid INTEGER,
+         oid VARCHAR,
+         qty INTEGER
     ) RETURNS VOID AS $$
+
 DECLARE
-  orderid VARCHAR;
+  tempPrice money;
 
 BEGIN
- IF oid = '' THEN
-   SELECT TO_CHAR(NOW(), 'DDMMYYYYHH24MISS') INTO orderid;
- ELSE orderid = oid;
- END IF;
+  select price into tempPrice from cart where
+  o_id = oid and
+  i_id = iid and
+  p_id = pid and
+  c_id = cid;
 
-INSERT INTO cart (p_id, c_id, o_id, i_id, quantity, price, total_price)
-values (pid, cid, orderid, iid, qty,price::money, qty*price);
+  tempPrice = tempPrice * qty;
+
+ UPDATE cart
+ set quantity = qty,
+ total_price = tempPrice
+ WHERE o_id = oid and
+ i_id = iid and
+ p_id = pid and
+ c_id = cid;
 
 END;
 $$ LANGUAGE plpgsql;
 
-
---select * from t_save_order_in_cart(1,1,2,'',1,2.00)
+select * from update_ingredient_qty (3,1,9, '23012021101814',3)
