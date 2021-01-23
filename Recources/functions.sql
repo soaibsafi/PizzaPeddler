@@ -321,21 +321,23 @@ from save_order_in_cart(1, 2, 4, '', 1, 4.00)
 
 -- update pizza id in cart table
 CREATE OR REPLACE FUNCTION update_pizza_id(pid INTEGER,
-                                           oid VARCHAR) RETURNS integer AS
+                                           oid VARCHAR)
+                                           RETURNS money AS
 $$
 DECLARE
-    value integer;
+    value money;
+    pizza_price money;
 
 BEGIN
-    WITH d as (
+     select price into pizza_price from pizza where p_id = pid;
+
         UPDATE cart
-            set p_id = pid
-            WHERE o_id = oid
-            RETURNING *
-    )
-    SELECT count(*)
-    INTO value
-    FROM d;
+            set p_id = pid, p_price = pizza_price
+            WHERE o_id = oid;
+
+
+    select (sum(total_price) + p_price) into value from cart where o_id = oid
+    group by p_price;
     RETURN value;
 
 END;
@@ -343,21 +345,23 @@ $$ LANGUAGE plpgsql;
 
 -- select * from update_pizza_id (3, '23012021101814')
 
+
+
+
 -- update ingredient qty in cart table
 CREATE OR REPLACE FUNCTION update_ingredient_qty(pid INTEGER,
                                                  cid INTEGER,
                                                  iid INTEGER,
                                                  oid VARCHAR,
-                                                 qty INTEGER) RETURNS INTEGER AS
+                                                 qty INTEGER) RETURNS money AS
 $$
 
 DECLARE
     tempPrice money;
-    value INTEGER;
+    value money;
 
 BEGIN
-    select price
-    into tempPrice
+    select price into tempPrice
     from cart
     where o_id = oid
       and i_id = iid
@@ -365,60 +369,53 @@ BEGIN
       and c_id = cid;
 
     tempPrice = tempPrice * qty;
-    WITH d as (
+
         UPDATE cart
             set quantity = qty,
                 total_price = tempPrice
             WHERE o_id = oid
                 and i_id = iid
                 and p_id = pid
-                and c_id = cid
-            RETURNING *
-    )
-    SELECT count(*)
-    INTO value
-    FROM d;
+                and c_id = cid;
+
+    select (sum(total_price) + p_price) into value from cart where o_id = oid
+    group by p_price;
     RETURN value;
 
 END;
 $$ LANGUAGE plpgsql;
 
-select *
-from update_ingredient_qty(1, 1, 2, '23012021115857', 16)
+-- select * from update_ingredient_qty(1, 1, 2, '23012021115857', 16)
 
 
 
--- Remove item from cart
+
 CREATE OR REPLACE FUNCTION remove_item_from_cart(oid VARCHAR,
                                                  pid INTEGER,
                                                  iid INTEGER,
                                                  cid INTEGER)
-    RETURNS integer
+    RETURNS money
 AS
 $$
 DECLARE
-    value INTEGER;
+    value money;
 BEGIN
-    WITH d as (
+
         DELETE
             FROM cart
                 WHERE cart.o_id = oid
                     AND cart.p_id = pid
                     AND cart.i_id = iid
-                    AND cart.c_id = cid
-                RETURNING *
-    )
-    SELECT count(*)
-    INTO value
-    FROM d;
+                    AND cart.c_id = cid;
+
+    select (sum(total_price) + p_price) into value from cart where o_id = oid
+    group by p_price;
     RETURN value;
 
 END;
 $$ LANGUAGE plpgsql;
 
-select *
-from remove_item_from_cart('22012021222912', 1, 2, 1);
-
+--select * from remove_item_from_cart('22012021222912', 1, 2, 1);
 
 -- Procedure  for deleting items from cart when that item is being inserted into order.
 CREATE

@@ -97,6 +97,7 @@ CREATE TABLE cart(
   p_id INTEGER,
   i_id INTEGER,
   total_price MONEY NOT NULL,
+  p_price MONEY NOT NULL,
   CONSTRAINT fk_customer FOREIGN KEY(c_id) REFERENCES customer(c_id),
   CONSTRAINT fk_pizza FOREIGN KEY(p_id) REFERENCES pizza(p_id),
   CONSTRAINT fk_ingredients FOREIGN KEY(i_id) REFERENCES ingredients(i_id),
