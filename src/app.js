@@ -244,6 +244,24 @@ app.get("/updatePizzaId", (request, response) => {
   });
 });
 
+app.get("/removeIngredientsFromCart", (request, response) => {
+  var pizzaIdUpdateQuery = {
+    name: "remove-ingredients-from-cart",
+    text: "select * from remove_item_from_cart($1,$2,$3,$4)",
+    values:[request.query.oid,
+      parseInt(request.query.pid),
+      parseInt(request.query.iid),
+      parseInt(request.query.cid)
+      ]
+  };
+  client.query(pizzaIdUpdateQuery, (err, res) => {
+    console.log(res)
+    response.send({
+      removedData: res
+    });
+  });
+});
+
 
 
 app.listen(3000, () => {

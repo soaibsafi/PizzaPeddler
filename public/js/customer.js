@@ -184,24 +184,29 @@ function ChangeQty(){
 }
 
 function Removerow(id){
-  console.log(id.substring(7));
-
   var tblID = id.substring(7);
+  res = tblID.split("_");
 
-  var tbl = document.getElementById(tblID);
-  if(tbl) tbl.parentNode.removeChild(tbl);
+  var oid = res[0];
+  var pid = res[1];
+  var cid = res[2];
+  var iid = res[3];
+
+  fetch("http://localhost:3000/removeIngredientsFromCart?oid=" + oid +"&pid="+pid+"&iid="+iid+"&cid="+cid).then((checkResponse) => {
+    checkResponse.json().then((data) => {
+      if(data.removedData.rowCount) {
+        var tbl = document.getElementById(tblID);
+        if (tbl) tbl.parentNode.removeChild(tbl);
+      }
+
+    });
+  });
+
 }
 
 function pizzaSizeChange(){
-  console.log("I am from pizza size change")
-
   var pizzaid = pizzaDDL.value;
   var orderId = order_ID.id;
-
-  console.log(orderId)
-
-
-
   if(orderId){
 
     fetch("http://localhost:3000/updatePizzaId?oid=" + orderId +"&pid="+pizzaid).then((checkResponse) => {
@@ -214,7 +219,6 @@ function pizzaSizeChange(){
 
 function UpdateTotalPrice(){
     var myVar = document.getElementById('Quantity').value;
-
     console.log(myVar);
 }
 

@@ -25,10 +25,11 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31d8681a-7ac3-4d83-825e-f25b35626a4a" name="Default Changelist" comment="Add (function) - check_ingredient_in_cart()">
+    <list default="true" id="31d8681a-7ac3-4d83-825e-f25b35626a4a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Recources/exercise_plpgsql.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Recources/exercise_plpgsql.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Recources/functions.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Recources/functions.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edit.sql" beforeDir="false" afterPath="$PROJECT_DIR$/edit.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/customer.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/customer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,25 +72,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
-  <component name="RunManager">
-    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="test" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="npm.test" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -103,11 +87,7 @@
       <workItem from="1611004428687" duration="6575000" />
       <workItem from="1611169416678" duration="313000" />
       <workItem from="1611169833853" duration="501000" />
-      <workItem from="1611254874658" duration="9506000" />
-      <workItem from="1611306946812" duration="66000" />
-      <workItem from="1611325911054" duration="4622000" />
-      <workItem from="1611338374912" duration="15930000" />
-      <workItem from="1611391406044" duration="4105000" />
+      <workItem from="1611254874658" duration="2427000" />
     </task>
     <task id="LOCAL-00001" summary="Update - connection.js&#10;Add - allbaker function">
       <created>1610916782623</created>
@@ -137,35 +117,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611092246732</updated>
     </task>
-    <task id="LOCAL-00005" summary="Add (function) - get_baker()">
-      <created>1611258104349</created>
+    <task id="LOCAL-00005" summary="Add(Functionality) - pizza update (in server)">
+      <created>1611402440037</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1611258104349</updated>
+      <updated>1611402440037</updated>
     </task>
-    <task id="LOCAL-00006" summary="Add (baker) - Get ingredients for baker">
-      <created>1611265392195</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1611265392195</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Add (function) - check_ingredient_in_cart()">
-      <created>1611347765326</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1611347765326</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Add (function) - check_ingredient_in_cart()">
-      <created>1611353342998</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1611353342998</updated>
-    </task>
-    <option name="localTasksCounter" value="9" />
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -200,9 +159,25 @@
     <MESSAGE value="Add - Function get_all_ingrediants and confirm_order" />
     <MESSAGE value="Update (function) - confirm_order" />
     <MESSAGE value="Update (function) - Change column name in  get_all_ingrediants and add_new_ingredient" />
-    <MESSAGE value="Add (function) - get_baker()" />
-    <MESSAGE value="Add (baker) - Get ingredients for baker" />
-    <MESSAGE value="Add (function) - check_ingredient_in_cart()" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add (function) - check_ingredient_in_cart()" />
+    <MESSAGE value="Add(Functionality) - pizza update (in server)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add(Functionality) - pizza update (in server)" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="0" y="0" width="1440" height="900" key="CommitChangelistDialog2" timestamp="1611402439823">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="0" y="0" width="1440" height="900" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1611402439823" />
+    <state x="144" y="79" key="MergeDialog" timestamp="1611400148267">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="144" y="79" key="MergeDialog/0.0.1440.900@0.0.1440.900" timestamp="1611400148267" />
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1611402520074">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1611402520074" />
+    <state x="518" y="371" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1611400122301">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="518" y="371" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1611400122301" />
   </component>
 </project>

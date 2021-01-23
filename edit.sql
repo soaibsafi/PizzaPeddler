@@ -1,33 +1,31 @@
--- update ingredient qty in cart table
-CREATE OR REPLACE FUNCTION update_ingredient_qty(
+-- update pizza id in cart table
+CREATE OR REPLACE FUNCTION update_pizza_id(
          pid INTEGER,
-         cid INTEGER,
-         iid INTEGER,
-         oid VARCHAR,
-         qty INTEGER
-    ) RETURNS VOID AS $$
-
+         oid VARCHAR
+    ) RETURNS integer AS $$
 DECLARE
-  tempPrice money;
+  value integer;
 
 BEGIN
-  select price into tempPrice from cart where
-  o_id = oid and
-  i_id = iid and
-  p_id = pid and
-  c_id = cid;
-
-  tempPrice = tempPrice * qty;
-
+WITH d as (
  UPDATE cart
- set quantity = qty,
- total_price = tempPrice
- WHERE o_id = oid and
- i_id = iid and
- p_id = pid and
- c_id = cid;
+ set p_id = pid
+ WHERE o_id = oid
+ RETURNING *
+ )
+    SELECT count(*)
+    INTO value
+    FROM d;
+    RETURN value;
 
 END;
 $$ LANGUAGE plpgsql;
 
-select * from update_ingredient_qty (3,1,9, '23012021101814',3)
+-- select * from update_pizza_id (3, '23012021101814')
+--
+--
+--  UPDATE cart
+--  set p_id = 4
+--  WHERE o_id = '23012021112618'
+--
+-- RETURNING *;
