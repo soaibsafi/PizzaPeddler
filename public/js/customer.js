@@ -153,7 +153,7 @@ function AddIngredients(ingredientID) {
                       case 3:
 
                         cellText = document.createElement("button");
-                        cellText.setAttribute("id","remove"+uniqueid)
+                        cellText.setAttribute("id","remove_"+uniqueid)
                         cellText.setAttribute("onclick","Removerow(this.id)");
                         var btnText = document.createTextNode("X");
                         cellText.appendChild(btnText);
@@ -189,7 +189,12 @@ function ChangeQty(){
 }
 
 function Removerow(id){
-  console.log(id);
+  console.log(id.substring(7));
+
+  var tblID = id.substring(7);
+
+  var tbl = document.getElementById(tblID);
+  if(tbl) tbl.parentNode.removeChild(tbl);
 }
 
 function pizzaSizeChange(){
