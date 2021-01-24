@@ -1,9 +1,9 @@
 console.log("Customer js file loaded");
 
 const orderData = document.querySelector("#orderDDL");
-const viewOrderBTN = document.querySelector("#viewOrderBTN");
 const orderTBL = document.querySelector("#orderTBL");
 const deliverBTN = document.querySelector("#deliverBTN");
+var isOutStock = false;
 
 window.onload = (event) => {
     event.preventDefault();
@@ -41,17 +41,13 @@ function viewOrderDropDown() {
     body.appendChild(orderDDL);
 }
 
-viewOrderBTN.addEventListener("click", () => {
-    console.log('view order')
-})
-
 function viewOrderTable(oid) {
 
     var table = document.getElementById("OrderDetailsTBL");
     var customerNameLBL = document.getElementById("customerNameLBL");
     var pizzaNameLBL = document.getElementById("pizzaNameLBL");
+    isOutStock = false;
 
-    console.log(table);
     if(table) {
         table.parentNode.removeChild(table);
         customerNameLBL.parentNode.removeChild(customerNameLBL);
@@ -95,8 +91,11 @@ function viewOrderTable(oid) {
                             break;
                         case 2:
                             var status = "In Stock";
-                            if(parseInt(data.orderDetailsData[i].oqty) > parseInt(data.orderDetailsData[i].sqty))
-                                status="Out of stock"
+                            if(parseInt(data.orderDetailsData[i].oqty) > parseInt(data.orderDetailsData[i].sqty)){
+                                isOutStock = true;
+                                status = "Out of stock"
+                            }
+
                             cellText = document.createTextNode(status);
                             break;
                     }
@@ -106,7 +105,6 @@ function viewOrderTable(oid) {
 
                 tblBody.appendChild(row);
             }
-
             tbl.appendChild(tblBody);
             body.appendChild(tbl);
             tbl.setAttribute("border", "1");
@@ -115,5 +113,41 @@ function viewOrderTable(oid) {
     else alert ("Please select an order")
 }
 deliverBTN.addEventListener("click",(e) => {
-    console.log("I am from deliver button");
+    console.log("I am from deliver");
+    var oid =  orderid.value;
+
+
+    if(oid && (!isOutStock)){
+        fetch("http://localhost:3000/getAllOrderDetails?oid=" + oid).then((checkResponse) => {
+            checkResponse.json().then((data) => {
+
+                for(var i = 0; i < data.orderDetailsData.length; i++){
+                    var iid = data.orderDetailsData[i].iid;
+                    var oqty = data.orderDetailsData[i].oqty;
+                    var oid = data.orderDetailsData[i].oid;
+
+                    fetch("http://localhost:3000/deliverAnOrder?oid=" + oid +"&iid="+iid+"&iqty="+oqty).then((deliverResponse) => {
+                        deliverResponse.json().then((data) => {
+                            var table = document.getElementById("OrderDetailsTBL");
+                            var customerNameLBL = document.getElementById("customerNameLBL");
+                            var pizzaNameLBL = document.getElementById("pizzaNameLBL");
+
+                            if(table) table.parentNode.removeChild(table);
+                            if(customerNameLBL)customerNameLBL.parentNode.removeChild(customerNameLBL);
+                            if(pizzaNameLBL)pizzaNameLBL.parentNode.removeChild(pizzaNameLBL);
+
+                            isOutStock = false;
+                            window.location.reload();
+                        });
+                    })
+
+                }
+            });
+        });
+    }
+    else{
+       if(!oid) alert("Please select an order");
+       else alert("One or more ingredients are out of stock");
+    }
+
 })
