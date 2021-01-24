@@ -43,6 +43,7 @@ function viewOrderDropDown() {
 
 function viewOrderTable(oid) {
 
+    debugger;
     var table = document.getElementById("OrderDetailsTBL");
     var customerNameLBL = document.getElementById("customerNameLBL");
     var pizzaNameLBL = document.getElementById("pizzaNameLBL");
@@ -90,13 +91,12 @@ function viewOrderTable(oid) {
                             cellText = document.createTextNode(data.orderDetailsData[i].oqty);
                             break;
                         case 2:
-                            var status = "In Stock";
-                            if(parseInt(data.orderDetailsData[i].oqty) > parseInt(data.orderDetailsData[i].sqty)){
+                          //  if(parseInt(data.orderDetailsData[i].oqty) > parseInt(data.orderDetailsData[i].sqty)){
+                            if(data.orderDetailsData[i].status === "Out of Stock"){
                                 isOutStock = true;
-                                status = "Out of stock"
                             }
 
-                            cellText = document.createTextNode(status);
+                            cellText = document.createTextNode(data.orderDetailsData[i].status);
                             break;
                     }
                     cell.appendChild(cellText);
