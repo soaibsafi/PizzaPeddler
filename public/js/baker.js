@@ -126,7 +126,7 @@ function UpdateIngredient(ingredientId)
             console.log(data.ingredientData[0].i_id)
             console.log(ingredient_ID.id)
 
-            let body = updateIngredientsTBL;
+            let body = ingredientsTBL;
             /*let tbl = document.createElement("table");
             let tblBody = document.createElement("tbody");
             let ingredientsDataLength = data.updateIngredientData.length;*/

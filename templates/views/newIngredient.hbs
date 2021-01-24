@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baker</title>
+    <link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+<body>
+<div class="main-content">
+    <p>Welcome, {{username}}!</p>
+    <p>Enter details of new ingredient here</p>
+
+    <br/> <br/>
+    <label>Name: </label>
+    <input type="text" id="inamedata">
+    <br/>
+
+    <label>Regional Provinance: </label>
+    <input type="text" id="rpnamedata">
+    <br/>
+
+    <label>Unit Price: </label>
+    <input type="text" id="upnamedata">
+    <br/>
+
+    <label>Quantity: </label>
+    <input type="text" id="qtydata">
+    <br/>
+
+    <label>Visibility: </label>
+    <select name="Visibility" id="visibilitydata">
+        <option value="True">True</option>
+        <option value="False">False</option>
+    </select>
+    <br/>
+
+
+    <div id="supplierDDL">
+        <label>Supplier: </label>
+    </div>
+
+
+    <br/>
+
+
+    <div id="newIngredientsDetail">
+    </div>
+
+    <button type="button" id="newIngredientBTN">Add!</button>
+
+</div>
+<script src="/js/newIngredient.js"></script>
+</body>
+
+</html>

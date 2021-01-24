@@ -297,7 +297,6 @@ app.get("/confirmOrder", (request, response) => {
 
 //localhost:3000/updateIngredientFromBaker?iid=19&iname=Alu&rp=Nepal&up=5.00&visibility=True&sid=2
 app.get("/updateIngredientFromBaker", (request, response) => {
-  console.log('updateIngredientFromBaker Route')
   let updateIngredientQuery = {
     name: "update-ingredient-from-baker",
     text: "select * from update_ingredients_info($1,$2,$3,$4,$5,$6)",
@@ -319,7 +318,6 @@ app.get("/updateIngredientFromBaker", (request, response) => {
 
 // Delete Single Ingredient from Ingredient table by Baker
 app.get("/deleteIngredientFromBaker", (request, response) => {
-// TODO
   let deleteIngredientQuery = {
     name: "delete-ingredient-from-baker",
     text: "select * from delete_ingredients($1)",
@@ -344,6 +342,53 @@ app.get("/getAllSupplier", (request, response) => {
     });
   });
 });
+
+
+app.get("/newIngredient", (request, response) => {
+  if (!request.query.id) {
+    return response.send({
+      error: "You have to provide an user id",
+    });
+  }
+
+  let bakerQuery = {
+    text: "select * from get_baker($1)",
+    values: [parseInt(request.query.id)],
+  };
+  client.query(bakerQuery, (err, res) => {
+    response.render("newIngredient", {
+      username: res.rows[0]["name"],
+    });
+  });
+});
+
+//http://localhost:3000/addNewIngredient?iname=Flour&rp=Bangladesh&up=4.50&qty=10&visibility=True&sid=5
+app.get("/addNewIngredient", (request, response) => {
+  let updateIngredientQuery = {
+    name: "add-new-ingredient-baker",
+    text: "select * from add_new_ingredient($1,$2,$3,$4,$5,$6)",
+    values: [
+      request.query.iname,
+      request.query.rp,
+      parseFloat(request.query.up),
+      parseInt(request.query.qty),
+      request.query.visibility,
+      parseInt(request.query.sid)
+    ]
+  };
+  client.query(updateIngredientQuery, (err, res) => {
+    response.send({
+      newIngredientData: res.rows
+    });
+  });
+});
+
+
+
+
+
+
+
 
 
 
