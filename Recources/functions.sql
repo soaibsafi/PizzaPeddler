@@ -188,6 +188,7 @@ $$ LANGUAGE plpgsql;
 select *
 from get_customer(3);
 
+
 -- get single ingredient
 CREATE OR REPLACE FUNCTION get_ingrediant(id INTEGER)
     RETURNS TABLE
@@ -397,9 +398,6 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- select * from update_ingredient_qty(1, 1, 2, '23012021115857', 16)
-
-
-
 
 CREATE OR REPLACE FUNCTION remove_item_from_cart(oid VARCHAR,
                                                  pid INTEGER,
@@ -658,6 +656,54 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- select * from  update_supplier_visibility(9)
+
+-- show an order details
+drop function t_get_an_order_details(id varchar);
+
+CREATE OR REPLACE FUNCTION t_get_an_order_details(id varchar)
+RETURNS table
+ (
+   oid VARCHAR,
+   oqty INTEGER,
+   iname text,
+   sQty integer,
+   pname text,
+   cname text
+
+
+--   ,status text
+) AS
+$$
+
+BEGIN
+
+return query
+ select o.o_id, o.quantity as oQty , i.name::text, i.quantity as sQty, p.size::text,c.name::text,
+
+ --  ,(select
+--      CASE WHEN o.quantity > i.quantity THEN 'Out of Stock'
+--      ELSE 'In stock'
+--      END AS status
+--      from "order" as o join ingredients as i on o.i_id = i.i_id
+--      where o.o_id = id) as status
+
+from "order" as o
+
+join customer as c on o.c_id = c.c_id
+join ingredients as i on o.i_id = i.i_id
+join pizza as p on o.p_id = p.p_id
+
+where
+o_id=id
+and o.i_id in (select i_id from ingredients)
+and o.c_id = c.c_id
+and o.p_id = p.p_id;
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- select * from  t_get_an_order_details('24012021131559')
+
 
 
 
