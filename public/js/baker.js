@@ -117,13 +117,14 @@ function createIngredientTable() {
 function UpdateIngredient(ingredientId)
 {
     const splitedIngredientId = ingredientId.substring(7);
-    fetch("http://localhost:3000/updateIngredientFromBaker?id="+splitedIngredientId).then((response) => {
+    fetch("http://localhost:3000/getIngredientInfo?id="+splitedIngredientId).then((response) => {
         response.json().then((data) => {
             console.log(data);
 
-            ingredient_ID.setAttribute("id", data.updateIngredientData[0].i_id);
-            console.log(data.updateIngredientData[0].i_id)
-            console.log(ingredient_ID)
+            ingredient_ID.setAttribute("id", data.ingredientData[0].i_id);
+            console.log(data.ingredientData[0].i_id)
+            console.log(data.ingredientData[0].i_id)
+            console.log(ingredient_ID.id)
 
             let body = updateIngredientsTBL;
             /*let tbl = document.createElement("table");
@@ -138,8 +139,9 @@ function UpdateIngredient(ingredientId)
 
             let ingredientNameInput = document.createElement('input');
             ingredientNameInput.type = "text";
-            ingredientNameInput.setAttribute('id', 'inamedata_'+ingredient_ID);
-            ingredientNameInput.value = data.updateIngredientData[0].name;
+            ingredientNameInput.setAttribute('id', 'inamedata_'+ingredient_ID.id);
+            console.log(ingredientNameInput.id)
+            ingredientNameInput.value = data.ingredientData[0].name;
             body.appendChild(ingredientNameInput)
             let br1 = document.createElement('br')
             body.appendChild(br1)
@@ -151,8 +153,8 @@ function UpdateIngredient(ingredientId)
             body.appendChild(rpNameLbl);
             let rpNameInput = document.createElement('input');
             rpNameInput.type = "text";
-            rpNameInput.setAttribute('id', 'rpnamedata_'+ingredient_ID);
-            rpNameInput.value = data.updateIngredientData[0].rp;
+            rpNameInput.setAttribute('id', 'rpnamedata_'+ingredient_ID.id);
+            rpNameInput.value = data.ingredientData[0].rp;
             body.appendChild(rpNameInput)
             let br2 = document.createElement('br')
             body.appendChild(br2)
@@ -164,8 +166,8 @@ function UpdateIngredient(ingredientId)
             body.appendChild(upNameLbl);
             let upNameInput = document.createElement('input');
             upNameInput.type = "text";
-            upNameInput.setAttribute('id', 'upnamedata_'+ingredient_ID);
-            upNameInput.value = data.updateIngredientData[0].up;
+            upNameInput.setAttribute('id', 'upnamedata_'+ingredient_ID.id);
+            upNameInput.value = data.ingredientData[0].up;
             body.appendChild(upNameInput)
             let br3 = document.createElement('br')
             body.appendChild(br3)
@@ -179,7 +181,7 @@ function UpdateIngredient(ingredientId)
 
             var visibilityNameDDL = document.createElement("select");
             visibilityNameDDL.name = "Visibility";
-            visibilityNameDDL.id = "vnamedata_" + visibilityNameId;
+            visibilityNameDDL.id = "vnamedata_" + ingredient_ID.id;
             //visibilityNameDDL.setAttribute("onchange", "ChangeQty(this.id)");
 
             for (const val of values) {
@@ -195,13 +197,13 @@ function UpdateIngredient(ingredientId)
             body.appendChild(br4)
 
             let supNameLbl = document.createElement("Label");
-            supNameLbl.setAttribute("for",'sname_'+ingredient_ID);
+            supNameLbl.setAttribute("for",'sname_'+ingredient_ID.id);
             supNameLbl.innerHTML = "Supplier: ";
             body.appendChild(supNameLbl);
 
             var supplierNameDDL = document.createElement("select");
             supplierNameDDL.name = "Supplier";
-            supplierNameDDL.id = "snamedata" + ingredient_ID;
+            supplierNameDDL.id = "snamedata_" + ingredient_ID.id;
             fetch("http://localhost:3000/getAllSupplier").then((response) => {
                 response.json().then((data) => {
                     console.log(data.supplierData);
@@ -215,6 +217,12 @@ function UpdateIngredient(ingredientId)
                 });
             });
             body.appendChild(supplierNameDDL);
+
+            let hr1 = document.createElement('hr')
+            body.appendChild(hr1)
+
+            let br5 = document.createElement('br')
+            body.appendChild(br5)
         });
     });
 }
@@ -242,14 +250,19 @@ function DeleteIngredient(ingredientId)
 
 updateIngredientBTN.addEventListener("click", (e) => {
 
-let iid = document.querySelector("#updateIngredientBTN");
-        //console.log(pizzaDDL.value);
-        fetch("http://localhost:3000/updateIngredientFromBaker?id=" + order_ID.id).then((checkResponse) => {
-            checkResponse.json().then((data) => {
-                //console.log(data)
-                alert(data.confirmOrderData[0].add_from_cart_to_order);
-            });
+let iid = ingredient_ID.id;
+let iname = document.querySelector("#inamedata_"+iid).value;
+let irp = document.querySelector("#rpnamedata_"+iid).value;
+let iup = document.querySelector("#upnamedata_"+iid).value
+let ivisibility = document.querySelector("#vnamedata_"+iid).value;
+let isid= document.querySelector("#snamedata_"+iid).value;
+console.log(typeof iup)
+    fetch("http://localhost:3000/updateIngredientFromBaker?iid="+iid+"&iname="+iname+"&rp="+irp+"&up="+iup+"&visibility="+ivisibility+"&sid="+isid).then((checkResponse) => {
+        checkResponse.json().then((data) => {
+            console.log(data.updateIngredientData.length)
+            if(data.updateIngredientData.length){
+                if(!alert('Successfully Updated!')){window.location.reload();}
+            }
         });
-
-
+    });
 });

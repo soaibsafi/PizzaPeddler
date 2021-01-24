@@ -295,17 +295,24 @@ app.get("/confirmOrder", (request, response) => {
 });
 
 
+//localhost:3000/updateIngredientFromBaker?iid=19&iname=Alu&rp=Nepal&up=5.00&visibility=True&sid=2
 app.get("/updateIngredientFromBaker", (request, response) => {
   console.log('updateIngredientFromBaker Route')
   let updateIngredientQuery = {
     name: "update-ingredient-from-baker",
-    text: "select * from get_ingrediant($1)",
-    values: [request.query.id]
+    text: "select * from update_ingredients_info($1,$2,$3,$4,$5,$6)",
+    values: [
+        parseInt(request.query.iid),
+      request.query.iname,
+      request.query.rp,
+      parseFloat(request.query.up),
+      request.query.visibility,
+      parseInt(request.query.sid)
+    ]
   };
   client.query(updateIngredientQuery, (err, res) => {
     response.send({
-      updateIngredientData: res.rows,
-
+      updateIngredientData: res.rows
     });
   });
 });
