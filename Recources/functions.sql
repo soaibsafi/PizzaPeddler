@@ -657,9 +657,10 @@ $$ LANGUAGE plpgsql;
 -- select * from  update_supplier_visibility(9)
 
 -- show an order details
-drop function t_get_an_order_details(id varchar);
 
-CREATE OR REPLACE FUNCTION t_get_an_order_details(id varchar)
+drop function get_an_order_details(id varchar);
+
+CREATE OR REPLACE FUNCTION get_an_order_details(id varchar)
 RETURNS table
  (
    oid VARCHAR,
@@ -667,8 +668,8 @@ RETURNS table
    iname text,
    sQty integer,
    pname text,
-   cname text
-
+   cname text,
+   iid integer
 
 --   ,status text
 ) AS
@@ -677,7 +678,8 @@ $$
 BEGIN
 
 return query
- select o.o_id, o.quantity as oQty , i.name::text, i.quantity as sQty, p.size::text,c.name::text,
+ select o.o_id, o.quantity as oQty , i.name::text, i.quantity as sQty,
+ p.size::text,c.name::text,o.i_id
 
  --  ,(select
 --      CASE WHEN o.quantity > i.quantity THEN 'Out of Stock'
@@ -701,7 +703,7 @@ and o.p_id = p.p_id;
 END;
 $$ LANGUAGE plpgsql;
 
--- select * from  t_get_an_order_details('24012021131559')
+-- select * from  get_an_order_details('24012021131559')
 
 
 -- delete an order and update the ingredient table
