@@ -338,6 +338,21 @@ app.get("/getAllSupplier", (request, response) => {
   });
 });
 
+app.get("/manageSuppliers", (request, response) => {
+
+    response.render("supplier", {
+      id: request.query.id
+
+  });
+});
+
+app.get("/manageIngredients", (request, response) => {
+  console.log("i am from ingredient route");
+    response.render("ingredients", {
+      id: request.query.id
+  });
+});
+
 
 
 
