@@ -13,9 +13,9 @@
 
 <body>
   <div class="main-content">
-    <p>Welcome {{username}}</p>
-    <p>Order your pizza from here</p>
-
+    <h2>Welcome {{username}}</h2>
+    <h3>Order your pizza from here</h3>
+      <hr/>
       <label for="pizzaSize">Choose Pizza Size:</label>
       <select name="pizzaname" id="pizzaDDL" onchange="pizzaSizeChange()">
         <option value=''>Select a pizza size</option>
@@ -26,7 +26,6 @@
       <br/><br/>
       <div id="orderCartTBL">
       </div>
-      <br/><br/>
       <label for="total" id="totalPriceLBL">Total Price:</label>
       <label for="totalAmount" id="totalPriceAmountLBL">0,00</label>
       <button type="button" id="confirmOrderBtn">Order it!</button>

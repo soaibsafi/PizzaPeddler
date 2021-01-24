@@ -13,11 +13,12 @@
 
 <body>
 <div class="main-content">
-    <p>Welcome {{username}}</p>
-    <p>The suppliers can be managed from here</p>
+    <h2>Welcome {{username}}</h2>
+    <h3>The suppliers can be managed from here</h3>
     <div style="border-style: solid; border-width: 0.5px"></div>
     <div>
-        <label for="Newsuppliers">Add new suppliers</label><br/><br/>
+        <h3>Add new suppliers</h3>
+        <br/>
         <label for="newSupNameLbl" id="newSupNameLbl">Name:</label>
         <input type="text" id="newSupNameText" name="newSupNameText"><br><br>
 
@@ -33,10 +34,11 @@
             <br/><br/>
         </div>
         <div style="border-style: solid; border-width: 0.5px"></div>
-        <br/><br/>
+        <br/>
 
         <div>
-            <label for="Newsuppliers">Edit suppliers</label><br/><br/>
+            <h3>Change Visibility of suppliers</h3>
+            <br/>
             <label for="supNameLbl" id="supNameLbl">Select Supplier Name</label>
 
             <select name="supDDL" id="supDDL" onchange="onChangeSupplier()">
@@ -45,7 +47,7 @@
             <br/><br/>
             <label for="visibiltyLbl">Choose visibility:</label>
 
-            <select name="visibiltyDLL" id="updatevisibiltyDLL" >
+            <select name="visibiltyDLL" id="updatevisibiltyDLL">
                 <option value="">Select One</option>
                 <option value="TRUE">TRUE</option>
                 <option value="FALSE">FALSE</option>
