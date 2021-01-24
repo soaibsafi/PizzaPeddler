@@ -164,6 +164,7 @@ function UpdateIngredient(ingredientId)
             body.appendChild(br2)
 
 
+
             let upNameLbl = document.createElement("Label");
             upNameLbl.setAttribute("for",'upname_'+ingredient_ID);
             upNameLbl.innerHTML = "Unit Price: ";

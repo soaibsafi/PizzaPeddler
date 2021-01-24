@@ -15,8 +15,7 @@
 <div class="main-content">
     <p>Welcome, {{username}}!</p>
     <p>Enter details of new ingredient here</p>
-
-    <br/> <br/>
+    <h3>Add New Ingredient</h3>
     <label>Name: </label>
     <input type="text" id="inamedata">
     <br/>
@@ -39,20 +38,30 @@
         <option value="False">False</option>
     </select>
     <br/>
-
-
     <div id="supplierDDL">
         <label>Supplier: </label>
     </div>
-
-
     <br/>
-
-
     <div id="newIngredientsDetail">
     </div>
-
     <button type="button" id="newIngredientBTN">Add!</button>
+
+    <hr/>
+    <h3>Place an order</h3>
+
+    <div id="ingredientDDLForOrder">
+        <label>Name: </label>
+
+    </div>
+    <div id="supplierDDLForOrder">
+        <label>Supplier: </label>
+    </div>
+
+    <label>Quantity: </label>
+    <input type="text" id="QtyDataForOrder">
+    <br/>
+    <button type="button" id="placeOrderBTN">Place Order!</button>
+
 
 </div>
 <script src="/js/newIngredient.js"></script>
