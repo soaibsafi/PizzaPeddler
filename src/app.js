@@ -279,10 +279,10 @@ app.get("/updateIngredientQtyinCart", (request, response) => {
   });
 });
 
-
+// Baker View
 app.get("/confirmOrder", (request, response) => {
 
-  var confirmOrderQuery = {
+  let confirmOrderQuery = {
     name: "confirm-order",
     text: "select * from add_from_cart_to_order($1)",
     values: [request.query.id]
@@ -293,6 +293,72 @@ app.get("/confirmOrder", (request, response) => {
     });
   });
 });
+
+
+app.get("/updateIngredientFromBaker", (request, response) => {
+  console.log('updateIngredientFromBaker Route')
+  let updateIngredientQuery = {
+    name: "update-ingredient-from-baker",
+    text: "select * from get_ingrediant($1)",
+    values: [request.query.id]
+  };
+  client.query(updateIngredientQuery, (err, res) => {
+    response.send({
+      updateIngredientData: res.rows,
+
+    });
+  });
+});
+
+// Delete Single Ingredient from Ingredient table by Baker
+app.get("/deleteIngredientFromBaker", (request, response) => {
+// TODO
+  let deleteIngredientQuery = {
+    name: "delete-ingredient-from-baker",
+    text: "select * from delete_ingredients($1)",
+    values: [parseInt(request.query.id)]
+  };
+  client.query(deleteIngredientQuery, (err, res) => {
+    response.send({
+      deleteIngredientData: res.rows,
+    });
+  });
+});
+
+
+app.get("/getAllSupplier", (request, response) => {
+  let supplierQuery = {
+    text: "select * from getallsupplier()",
+  };
+  client.query(supplierQuery, (err, res) => {
+
+    response.send({
+      supplierData: res.rows,
+    });
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 app.listen(3000, () => {
