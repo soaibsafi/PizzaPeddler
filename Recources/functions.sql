@@ -589,6 +589,25 @@ svisibility boolean
 RETURNS varchar AS
 $$
 
+-- TODO where is the error
+-- Get all distinct order ids from order table
+CREATE OR REPLACE FUNCTION get_all_order()
+    RETURNS TABLE
+            (
+                oid VARCHAR
+            )
+AS
+$$
+BEGIN
+    RETURN QUERY
+        SELECT DISTINCT o_id
+        FROM "order";
+
+END;
+$$ LANGUAGE plpgsql;
+
+select *
+from get_all_order();
 
 BEGIN
 
