@@ -5,6 +5,8 @@ const manageSupplierBTN = document.querySelector("#manageSupplierBTN");
 const updateIngredientBTN = document.querySelector("#updateIngredientBTN");
 const ingredientsTBL = document.querySelector("#ingredientsTBL");
 const updateIngredientsTBL = document.querySelector("#updateIngredientsTBL");
+const manageOrderBTN = document.querySelector("#manageOrderBTN");
+
 var ingredient_ID = document.createElement("label");
 ingredient_ID.setAttribute("id", "")
 
@@ -279,10 +281,17 @@ manageSupplierBTN.addEventListener("click",(e)=>{
 
 
 manageIngredientBTN.addEventListener("click",(e)=>{
-
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const bakerid = urlParams.get('id')
-    // debugger;
-    window.location.href = "http://localhost:3000/manageIngredients?id="+bakerid;
+
+    window.location.href = "http://localhost:3000/newIngredient?id="+bakerid;
+})
+
+manageOrderBTN.addEventListener("click",(e) => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const bakerid = urlParams.get('id')
+
+    window.location.href = "http://localhost:3000/viewOrder?id="+bakerid;
 })
