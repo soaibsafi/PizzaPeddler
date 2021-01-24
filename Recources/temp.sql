@@ -1,51 +1,45 @@
 -- remove ingredient
-CREATE OR REPLACE FUNCTION delete_ingredients(iid INTEGER)
-    RETURNS INTEGER AS
+CREATE OR REPLACE FUNCTION get_all_order_details(oid VARCHAR)
+    RETURNS TABLE
+            (
+                iname VARCHAR,
+                order_i_qty INTEGER,
+                stock_i_qty INTEGER,
+                cname VARCHAR,
+                p_size varchar
+            )
+AS
 $$
 DECLARE
-    cart_iid INTEGER;
     order_iid INTEGER;
-    res INTEGER;
-
 BEGIN
+    SELECT iid INTO order_iid FROM "order" WHERE o_id = oid;
+    RETURN QUERY
+        SELECT  ingredients.name as iname,
+                (SELECT "order".quantity as order_i_qty
+                    FROM "order"
+                    WHERE "order".o_id = oid),
+                ingredients.quantity as stock_i_qty,
 
-    select COUNT (i_id) into cart_iid from cart where i_id = iid;
-    select COUNT(i_id) into order_iid from "order" where i_id = iid;
 
-    IF cart_iid = 0 AND order_iid = 0
-    THEN
-        WITH d as (
-        delete from ingredients where i_id = iid
-        returning *)
-        SELECT count(*)
-        INTO res
-        FROM d;
-        RETURN res;
---     RETURN 'Deleted';
-
-        ELSE
-        res = 0;
-        RETURN res;
---     RETURN 'This data is existed in cart or order table';
-
-    END IF;
-
+        FROM ingredients
+    WHERE ingredients.i_id = order_iid;
 
 END;
 $$ LANGUAGE plpgsql;
 
--- select * from  delete_ingredients(2)
+select *
+from get_all_order();
 -- select * from  delete_ingredients(2)
 
 
-CREATE OR REPLACE FUNCTION delete_ingredients(iid INTEGER, name VARCHAR, )
+CREATE OR REPLACE FUNCTION delete_ingredients(iid INTEGER, name VARCHAR,)
     RETURNS varchar AS
 $$
 DECLARE
     res INTEGER;
 
 BEGIN
-
 
 
 END;

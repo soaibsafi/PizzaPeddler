@@ -387,8 +387,53 @@ app.get("/addNewIngredient", (request, response) => {
 
 
 
+app.get("/getAllOrder", (request, response) => {
+  let supplierQuery = {
+    text: "select * from get_all_order()",
+  };
+  client.query(supplierQuery, (err, res) => {
+
+    response.send({
+      orderData: res.rows,
+    });
+  });
+});
+
+app.get("/getAllOrderDetails", (request, response) => {
+  let orderDetailsQuery = {
+    name: "ge-all-order-details",
+    text: "select * from add_new_ingredient($1)",
+    values: [
+      request.query.oid
+    ]
+  };
+  client.query(orderDetailsQuery, (err, res) => {
+
+    response.send({
+      orderDetailsData: res.rows,
+    });
+  });
+});
 
 
+
+app.get("/viewOrder", (request, response) => {
+  if (!request.query.id) {
+    return response.send({
+      error: "You have to provide an user id",
+    });
+  }
+
+  let bakerQuery = {
+    text: "select * from get_baker($1)",
+    values: [parseInt(request.query.id)],
+  };
+  client.query(bakerQuery, (err, res) => {
+    response.render("vieworder", {
+      username: res.rows[0]["name"],
+    });
+  });
+});
 
 
 
