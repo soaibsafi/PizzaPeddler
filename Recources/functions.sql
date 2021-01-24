@@ -589,26 +589,6 @@ svisibility boolean
 RETURNS varchar AS
 $$
 
--- TODO where is the error
--- Get all distinct order ids from order table
-CREATE OR REPLACE FUNCTION get_all_order()
-    RETURNS TABLE
-            (
-                oid VARCHAR
-            )
-AS
-$$
-BEGIN
-    RETURN QUERY
-        SELECT DISTINCT o_id
-        FROM "order";
-
-END;
-$$ LANGUAGE plpgsql;
-
-select *
-from get_all_order();
-
 BEGIN
 
 insert into supplier (name, visibility) values (sname, svisibility);
@@ -722,6 +702,30 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- select * from  t_get_an_order_details('24012021131559')
+
+
+-- delete an order and update the ingredient table
+drop function deliver_an_order(oid varchar, iid integer,iqty integer );
+
+CREATE OR REPLACE FUNCTION deliver_an_order(oid varchar, iid integer,iqty integer )
+RETURNS void AS $$
+declare
+i_qty integer;
+BEGIN
+
+select quantity into i_qty from ingredients where i_id = iid;
+
+update ingredients set quantity = i_qty - iqty
+where i_id = iid;
+
+delete from "order" where o_id = oid and i_id = iid;
+
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- select * from  deliver_an_order('24012021131559',15,1)
+
 
 
 

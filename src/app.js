@@ -508,6 +508,19 @@ app.get("/manageIngredients", (request, response) => {
   });
 });
 
+app.get("/deliverAnOrder", (request, response) => {
+  let addSupplierQuery = {
+    name:'deliver-an-order',
+    text: "select * from deliver_an_order($1,$2,$3)",
+    values:[request.query.oid,parseInt(request.query.iid),parseInt(request.query.iqty)]
+  };
+
+  client.query(addSupplierQuery, (err, res) => {
+    response.send({
+      // supplierData: res.rows
+    });
+  });
+});
 
 
 

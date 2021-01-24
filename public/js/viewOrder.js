@@ -3,6 +3,7 @@ console.log("Customer js file loaded");
 const orderData = document.querySelector("#orderDDL");
 const viewOrderBTN = document.querySelector("#viewOrderBTN");
 const orderTBL = document.querySelector("#orderTBL");
+const deliverBTN = document.querySelector("#deliverBTN");
 
 window.onload = (event) => {
     event.preventDefault();
@@ -109,11 +110,10 @@ function viewOrderTable(oid) {
             tbl.appendChild(tblBody);
             body.appendChild(tbl);
             tbl.setAttribute("border", "1");
-
-
-
         })
     })
     else alert ("Please select an order")
-
 }
+deliverBTN.addEventListener("click",(e) => {
+    console.log("I am from deliver button");
+})
