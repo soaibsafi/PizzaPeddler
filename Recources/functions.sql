@@ -583,4 +583,82 @@ $$ LANGUAGE plpgsql;
 
 -- select * from  order_an_ingredient(12,1,3)
 
+-- add new supplier
+CREATE OR REPLACE FUNCTION save_New_Supplier(
+sname varchar,
+svisibility boolean
+)
+RETURNS varchar AS
+$$
+
+
+BEGIN
+
+insert into supplier (name, visibility) values (sname, svisibility);
+return 'Supplier saved successfully';
+
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- select * from  save_New_Supplier('dummy',True)
+
+-- get all supplier no visibility check
+CREATE OR REPLACE FUNCTION get_all_suppliers_no_visibility()
+RETURNS table (
+sid integer,
+sname varchar,
+svisible boolean
+) AS
+$$
+
+BEGIN
+
+return query
+select * from supplier;
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- select * from  get_all_suppliers_no_visibility()
+
+-- get a supplier visibility
+CREATE OR REPLACE FUNCTION get_supplier_visibility( id integer)
+RETURNS table (
+sid integer,
+svisible boolean
+) AS
+$$
+
+BEGIN
+
+return query
+select s_id, visibility from supplier where s_id = id;
+
+
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- select * from  get_supplier_visibility(9)
+
+-- update a supplier visibility
+CREATE OR REPLACE FUNCTION update_supplier_visibility( id integer, svisibility boolean)
+RETURNS varchar AS
+$$
+
+BEGIN
+
+update supplier set visibility = svisibility
+where s_id = id;
+
+return 'This supplier has been updated';
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- select * from  update_supplier_visibility(9)
+
+
+
 

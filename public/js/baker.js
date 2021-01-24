@@ -1,5 +1,7 @@
 console.log("Customer js file loaded");
 
+const manageIngredientBTN = document.querySelector("#manageIngredientBTN");
+const manageSupplierBTN = document.querySelector("#manageSupplierBTN");
 const updateIngredientBTN = document.querySelector("#updateIngredientBTN");
 const ingredientsTBL = document.querySelector("#ingredientsTBL");
 const updateIngredientsTBL = document.querySelector("#updateIngredientsTBL");
@@ -266,3 +268,21 @@ console.log(typeof iup)
         });
     });
 });
+
+manageSupplierBTN.addEventListener("click",(e)=>{
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const bakerid = urlParams.get('id')
+
+    window.location.href = "http://localhost:3000/manageSuppliers?id="+bakerid;
+})
+
+
+manageIngredientBTN.addEventListener("click",(e)=>{
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const bakerid = urlParams.get('id')
+    // debugger;
+    window.location.href = "http://localhost:3000/manageIngredients?id="+bakerid;
+})

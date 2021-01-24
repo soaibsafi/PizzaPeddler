@@ -295,8 +295,8 @@ app.get("/confirmOrder", (request, response) => {
 });
 
 
-//localhost:3000/updateIngredientFromBaker?iid=19&iname=Alu&rp=Nepal&up=5.00&visibility=True&sid=2
 app.get("/updateIngredientFromBaker", (request, response) => {
+  console.log('updateIngredientFromBaker Route')
   let updateIngredientQuery = {
     name: "update-ingredient-from-baker",
     text: "select * from update_ingredients_info($1,$2,$3,$4,$5,$6)",
@@ -318,6 +318,7 @@ app.get("/updateIngredientFromBaker", (request, response) => {
 
 // Delete Single Ingredient from Ingredient table by Baker
 app.get("/deleteIngredientFromBaker", (request, response) => {
+// TODO
   let deleteIngredientQuery = {
     name: "delete-ingredient-from-baker",
     text: "select * from delete_ingredients($1)",
@@ -387,6 +388,80 @@ app.get("/addNewIngredient", (request, response) => {
 
 
 
+
+
+
+
+app.get("/manageSuppliers", (request, response) => {
+  response.render("supplier", {
+    id: request.query.id
+  });
+});
+
+app.get("/saveSupplier", (request, response) => {
+  let addSupplierQuery = {
+    name:'save-supplier-info',
+    text: "select * from save_New_Supplier($1,$2)",
+    values:[request.query.name,request.query.visible]
+  };
+
+  client.query(addSupplierQuery, (err, res) => {
+    response.send({
+      supplierData: res.rows,
+    });
+  });
+});
+
+app.get("/getAllSupplierNoVisibilityCheck", (request, response) => {
+  let addSupplierQuery = {
+    name:'get-all-suppliers-no-visibility',
+    text: "select * from get_all_suppliers_no_visibility()",
+    // values:[request.query.name,request.query.visible]
+  };
+
+  client.query(addSupplierQuery, (err, res) => {
+    response.send({
+      supplierData: res.rows,
+    });
+  });
+});
+
+
+app.get("/getSupplierVisibility", (request, response) => {
+  let addSupplierQuery = {
+    name:'get-suppliers-visibility',
+    text: "select * from get_supplier_visibility($1)",
+     values:[parseInt(request.query.id)]
+  };
+
+  client.query(addSupplierQuery, (err, res) => {
+    response.send({
+      supplierData: res.rows
+    });
+  });
+});
+
+
+
+app.get("/updateSupplierVisibility", (request, response) => {
+  let addSupplierQuery = {
+    name:'update-suppliers-visibility',
+    text: "select * from update_supplier_visibility($1 , $2)",
+    values:[parseInt(request.query.id), request.query.visible]
+  };
+
+  client.query(addSupplierQuery, (err, res) => {
+    response.send({
+      update_supplier_visibility: res.rows[0].update_supplier_visibility
+    });
+  });
+});
+
+app.get("/manageIngredients", (request, response) => {
+    response.render("ingredients", {
+      id: request.query.id
+  });
+});
 
 
 

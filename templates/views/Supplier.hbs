@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier</title>
+    <link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+<body>
+<div class="main-content">
+    <p>Welcome {{username}}</p>
+    <p>The suppliers can be managed from here</p>
+    <div style="border-style: solid; border-width: 0.5px"></div>
+    <div>
+        <label for="Newsuppliers">Add new suppliers</label><br/><br/>
+        <label for="newSupNameLbl" id="newSupNameLbl">Name:</label>
+        <input type="text" id="newSupNameText" name="newSupNameText"><br><br>
+
+        <label for="visibiltyLbl">Choose visibility:</label>
+
+        <select name="visibiltyDLL" id="visibiltyDLL">
+            <option value="TRUE">TRUE</option>
+            <option value="FALSE">FALSE</option>
+        </select>
+        <div>
+            <br/><br/>
+            <button type="button" id="saveNewSuppBTN">Save</button>
+            <br/><br/>
+        </div>
+        <div style="border-style: solid; border-width: 0.5px"></div>
+        <br/><br/>
+
+        <div>
+            <label for="Newsuppliers">Edit suppliers</label><br/><br/>
+            <label for="supNameLbl" id="supNameLbl">Select Supplier Name</label>
+
+            <select name="supDDL" id="supDDL" onchange="onChangeSupplier()">
+                <option value=''>Select a Supplier</option>
+            </select>
+            <br/><br/>
+            <label for="visibiltyLbl">Choose visibility:</label>
+
+            <select name="visibiltyDLL" id="updatevisibiltyDLL" >
+                <option value="">Select One</option>
+                <option value="TRUE">TRUE</option>
+                <option value="FALSE">FALSE</option>
+            </select>
+            <div>
+                <br/><br/>
+                <button type="button" id="updateSuppBTN">Update</button>
+                <br/><br/>
+            </div>
+        </div>
+
+
+    </div>
+    <script src="/js/Supplier.js"></script>
+
+</body>
+
+</html>
