@@ -194,7 +194,12 @@ CREATE OR REPLACE FUNCTION get_ingrediant(id INTEGER)
             (
                 i_id   integer,
                 i_name TEXT,
-                price  numeric
+                price  numeric,
+                name VARCHAR,
+                rp VARCHAR,
+                up NUMERIC,
+                visibility BOOLEAN,
+                sid INTEGER
             )
 AS
 $$
@@ -207,7 +212,12 @@ BEGIN
                        ingredients.regional_provinance,
                        ')'
                    )                           as i_name,
-               ingredients.unit_price::numeric as price
+               ingredients.unit_price::numeric as price,
+               ingredients.name,
+               ingredients.regional_provinance,
+               ingredients.unit_price::numeric,
+               ingredients.visibility,
+               ingredients.s_id
         FROM public.ingredients
         WHERE ingredients.i_id = id;
 END;

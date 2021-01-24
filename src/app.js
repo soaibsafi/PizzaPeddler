@@ -296,18 +296,18 @@ app.get("/confirmOrder", (request, response) => {
 
 
 app.get("/updateIngredientFromBaker", (request, response) => {
-// TODO
+  console.log('updateIngredientFromBaker Route')
   let updateIngredientQuery = {
     name: "update-ingredient-from-baker",
-    text: "select * from get_customer($1)",
+    text: "select * from get_ingrediant($1)",
     values: [request.query.id]
   };
-  client.query(confirmOrderQuery, (err, res) => {
+  client.query(updateIngredientQuery, (err, res) => {
     response.send({
       updateIngredientData: res.rows,
+
     });
   });
-
 });
 
 // Delete Single Ingredient from Ingredient table by Baker
@@ -324,6 +324,41 @@ app.get("/deleteIngredientFromBaker", (request, response) => {
     });
   });
 });
+
+
+app.get("/getAllSupplier", (request, response) => {
+  let supplierQuery = {
+    text: "select * from getallsupplier()",
+  };
+  client.query(supplierQuery, (err, res) => {
+
+    response.send({
+      supplierData: res.rows,
+    });
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 app.listen(3000, () => {
