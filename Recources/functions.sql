@@ -188,7 +188,6 @@ $$ LANGUAGE plpgsql;
 select *
 from get_customer(3);
 
-
 -- get single ingredient
 CREATE OR REPLACE FUNCTION get_ingrediant(id INTEGER)
     RETURNS TABLE
@@ -398,6 +397,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- select * from update_ingredient_qty(1, 1, 2, '23012021115857', 16)
+
 
 CREATE OR REPLACE FUNCTION remove_item_from_cart(oid VARCHAR,
                                                  pid INTEGER,
@@ -729,5 +729,22 @@ $$ LANGUAGE plpgsql;
 
 
 
+-- Delete order after served
+CREATE OR REPLACE FUNCTION delete_order(oid VARCHAR)
+    RETURNS varchar AS
+$$
+DECLARE
+    value integer;
+BEGIN
+    with d as (delete from "order" where "order".o_id = oid
+        RETURNING *)
+    SELECT count(*)
+    INTO value
+    FROM d;
+    RETURN format('Order with %s ingredients has successfully served!', value);
 
+END;
+$$ LANGUAGE plpgsql;
 
+select *
+from delete_order('24012021131559');

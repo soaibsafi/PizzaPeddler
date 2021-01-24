@@ -1,31 +1,30 @@
--- remove ingredient
-CREATE OR REPLACE FUNCTION get_all_order_details(oid VARCHAR)
-    RETURNS TABLE
-            (
-                iname VARCHAR,
-                order_i_qty INTEGER,
-                stock_i_qty INTEGER
-            )
-AS
+CREATE
+    OR REPLACE FUNCTION update_stock_on_order_served()
+    RETURNS trigger AS
 $$
-DECLARE
-    order_iid INTEGER;
 BEGIN
-    SELECT i_id INTO order_iid FROM "order" WHERE o_id = oid;
-    RETURN QUERY
-        SELECT  ingredients.name as iname,
-                (SELECT "order".quantity as order_i_qty
-                    FROM "order"
-                    WHERE "order".o_id = oid),
-                ingredients.quantity as stock_i_qty
-        FROM ingredients
-    WHERE ingredients.i_id = order_iid;
+    UPDATE ingredients
+    SET quantity = (SELECT ingredients.quantity
+                    FROM ingredients,
+                         "order"
+                    WHERE ingredients.i_id = OLD.i_id
+                      AND "order".o_id = OLD.o_id
+                   )::INTEGER - OLD.quantity;
+    RETURN OLD;
 
 END;
-$$ LANGUAGE plpgsql;
+$$
+    LANGUAGE 'plpgsql';
 
-select *
-from get_all_order_details('24012021131559');
+
+-- Trigger to call removing item from cart after inserting into order
+    CREATE TRIGGER order_served_trigger
+    BEFORE DELETE
+    ON "order"
+    FOR EACH ROW
+EXECUTE PROCEDURE update_stock_on_order_served();
+
+
 -- select * from  delete_ingredients(2)
 
 
