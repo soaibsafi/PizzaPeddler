@@ -338,20 +338,79 @@ app.get("/getAllSupplier", (request, response) => {
   });
 });
 
+
 app.get("/manageSuppliers", (request, response) => {
+  response.render("supplier", {
+    id: request.query.id
+  });
+});
 
-    response.render("supplier", {
-      id: request.query.id
+app.get("/saveSupplier", (request, response) => {
+  let addSupplierQuery = {
+    name:'save-supplier-info',
+    text: "select * from save_New_Supplier($1,$2)",
+    values:[request.query.name,request.query.visible]
+  };
 
+  client.query(addSupplierQuery, (err, res) => {
+    response.send({
+      supplierData: res.rows,
+    });
+  });
+});
+
+app.get("/getAllSupplierNoVisibilityCheck", (request, response) => {
+  let addSupplierQuery = {
+    name:'get-all-suppliers-no-visibility',
+    text: "select * from get_all_suppliers_no_visibility()",
+    // values:[request.query.name,request.query.visible]
+  };
+
+  client.query(addSupplierQuery, (err, res) => {
+    response.send({
+      supplierData: res.rows,
+    });
+  });
+});
+
+
+app.get("/getSupplierVisibility", (request, response) => {
+  let addSupplierQuery = {
+    name:'get-suppliers-visibility',
+    text: "select * from get_supplier_visibility($1)",
+     values:[parseInt(request.query.id)]
+  };
+
+  client.query(addSupplierQuery, (err, res) => {
+    response.send({
+      supplierData: res.rows
+    });
+  });
+});
+
+
+
+app.get("/updateSupplierVisibility", (request, response) => {
+  let addSupplierQuery = {
+    name:'update-suppliers-visibility',
+    text: "select * from update_supplier_visibility($1 , $2)",
+    values:[parseInt(request.query.id), request.query.visible]
+  };
+
+  client.query(addSupplierQuery, (err, res) => {
+    response.send({
+      update_supplier_visibility: res.rows[0].update_supplier_visibility
+    });
   });
 });
 
 app.get("/manageIngredients", (request, response) => {
-  console.log("i am from ingredient route");
     response.render("ingredients", {
       id: request.query.id
   });
 });
+
+
 
 
 
