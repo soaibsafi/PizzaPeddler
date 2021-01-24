@@ -192,14 +192,14 @@ from get_customer(3);
 CREATE OR REPLACE FUNCTION get_ingrediant(id INTEGER)
     RETURNS TABLE
             (
-                i_id   integer,
-                i_name TEXT,
-                price  numeric,
-                name VARCHAR,
-                rp VARCHAR,
-                up NUMERIC,
+                i_id       integer,
+                i_name     TEXT,
+                price      numeric,
+                name       VARCHAR,
+                rp         VARCHAR,
+                up         NUMERIC,
                 visibility BOOLEAN,
-                sid INTEGER
+                sid        INTEGER
             )
 AS
 $$
@@ -332,21 +332,25 @@ from save_order_in_cart(1, 2, 4, '', 1, 4.00)
 -- update pizza id in cart table
 CREATE OR REPLACE FUNCTION update_pizza_id(pid INTEGER,
                                            oid VARCHAR)
-                                           RETURNS money AS
+    RETURNS money AS
 $$
 DECLARE
-    value money;
+    value       money;
     pizza_price money;
 
 BEGIN
-     select price into pizza_price from pizza where p_id = pid;
+    select price into pizza_price from pizza where p_id = pid;
 
-        UPDATE cart
-            set p_id = pid, p_price = pizza_price
-            WHERE o_id = oid;
+    UPDATE cart
+    set p_id    = pid,
+        p_price = pizza_price
+    WHERE o_id = oid;
 
 
-    select (sum(total_price) + p_price) into value from cart where o_id = oid
+    select (sum(total_price) + p_price)
+    into value
+    from cart
+    where o_id = oid
     group by p_price;
     RETURN value;
 
@@ -356,23 +360,22 @@ $$ LANGUAGE plpgsql;
 -- select * from update_pizza_id (3, '23012021101814')
 
 
-
-
 -- update ingredient qty in cart table
 CREATE OR REPLACE FUNCTION update_ingredient_qty(pid INTEGER,
                                                  cid INTEGER,
                                                  iid INTEGER,
                                                  oid VARCHAR,
                                                  qty INTEGER)
-            RETURNS money AS
+    RETURNS money AS
 $$
 
 DECLARE
     tempPrice money;
-    value money;
+    value     money;
 
 BEGIN
-    select price into tempPrice
+    select price
+    into tempPrice
     from cart
     where o_id = oid
       and i_id = iid
@@ -381,15 +384,18 @@ BEGIN
 
     tempPrice = tempPrice * qty;
 
-        UPDATE cart
-            set quantity = qty,
-                total_price = tempPrice
-            WHERE o_id = oid
-                and i_id = iid
-                and p_id = pid
-                and c_id = cid;
+    UPDATE cart
+    set quantity    = qty,
+        total_price = tempPrice
+    WHERE o_id = oid
+      and i_id = iid
+      and p_id = pid
+      and c_id = cid;
 
-    select (sum(total_price) + p_price) into value from cart where o_id = oid
+    select (sum(total_price) + p_price)
+    into value
+    from cart
+    where o_id = oid
     group by p_price;
     RETURN value;
 
@@ -397,8 +403,6 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- select * from update_ingredient_qty(1, 1, 2, '23012021115857', 16)
-
-
 
 
 CREATE OR REPLACE FUNCTION remove_item_from_cart(oid VARCHAR,
@@ -412,14 +416,17 @@ DECLARE
     value money;
 BEGIN
 
-        DELETE
-            FROM cart
-                WHERE cart.o_id = oid
-                    AND cart.p_id = pid
-                    AND cart.i_id = iid
-                    AND cart.c_id = cid;
+    DELETE
+    FROM cart
+    WHERE cart.o_id = oid
+      AND cart.p_id = pid
+      AND cart.i_id = iid
+      AND cart.c_id = cid;
 
-    select (sum(total_price) + p_price) into value from cart where o_id = oid
+    select (sum(total_price) + p_price)
+    into value
+    from cart
+    where o_id = oid
     group by p_price;
     RETURN value;
 
@@ -480,31 +487,31 @@ $$ LANGUAGE plpgsql;
 
 -- remove ingredient
 CREATE OR REPLACE FUNCTION delete_ingredients(iid INTEGER)
-RETURNS varchar AS
+    RETURNS varchar AS
 $$
 DECLARE
-    cart_iid INTEGER;
+    cart_iid  INTEGER;
     order_iid INTEGER;
-    value integer;
+    value     integer;
 
 BEGIN
 
-select COUNT (i_id) into cart_iid from cart where i_id = iid;
-select COUNT(i_id) into order_iid from "order" where i_id = iid;
+    select COUNT(i_id) into cart_iid from cart where i_id = iid;
+    select COUNT(i_id) into order_iid from "order" where i_id = iid;
 
-IF cart_iid = 0 AND order_iid = 0
-THEN
-    with d as (delete from ingredients where i_id = iid
-    RETURNING *)
-    SELECT count(*)
-    INTO value
-    FROM d;
-    RETURN 'Deleted';
+    IF cart_iid = 0 AND order_iid = 0
+    THEN
+        with d as (delete from ingredients where i_id = iid
+            RETURNING *)
+        SELECT count(*)
+        INTO value
+        FROM d;
+        RETURN 'Deleted';
 
     ELSE
-    RETURN 'This data is existed in cart or order table';
+        RETURN 'This data is existed in cart or order table';
 
-END IF;
+    END IF;
 
 
 END;
@@ -513,27 +520,26 @@ $$ LANGUAGE plpgsql;
 -- select * from  delete_ingredients(2)
 
 -- update ingredients information
-CREATE OR REPLACE FUNCTION update_ingredients_info
-( iid integer,
-iname varchar,
-region VARCHAR,
-unitPrice numeric,
-visible boolean,
-sid integer)
-RETURNS void AS
+CREATE OR REPLACE FUNCTION update_ingredients_info(iid integer,
+                                                   iname varchar,
+                                                   region VARCHAR,
+                                                   unitPrice numeric,
+                                                   visible boolean,
+                                                   sid integer)
+    RETURNS void AS
 $$
 DECLARE
     q integer;
 BEGIN
-select quantity into q from ingredients where i_id = iid;
-        UPDATE ingredients
-            set name = iname,
-            regional_provinance = region,
-            unit_price = unitPrice,
-            visibility = visible,
-            s_id = sid,
-            total_price = q * unitPrice
-            WHERE i_id = iid;
+    select quantity into q from ingredients where i_id = iid;
+    UPDATE ingredients
+    set name                = iname,
+        regional_provinance = region,
+        unit_price          = unitPrice,
+        visibility          = visible,
+        s_id                = sid,
+        total_price         = q * unitPrice
+    WHERE i_id = iid;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -542,13 +548,17 @@ $$ LANGUAGE plpgsql;
 
 -- get all suppliers
 CREATE OR REPLACE FUNCTION getAllSupplier()
-RETURNS TABLE (sid integer,
-sname varchar) AS
+    RETURNS TABLE
+            (
+                sid   integer,
+                sname varchar
+            )
+AS
 $$
 
 BEGIN
-return query
-select s_id, name  from supplier where visibility = true ;
+    return query
+        select s_id, name from supplier where visibility = true;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -556,26 +566,24 @@ $$ LANGUAGE plpgsql;
 -- select * from  getAllSupplier()
 
 -- order new ingredients
-CREATE OR REPLACE FUNCTION order_an_ingredient(
-iid integer,
-sid integer,
-qty numeric
-)
-RETURNS void AS
+CREATE OR REPLACE FUNCTION order_an_ingredient(iid integer,
+                                               sid integer,
+                                               qty numeric)
+    RETURNS void AS
 $$
 
 DECLARE
- tp numeric ;
+    tp numeric ;
 
 BEGIN
 
-select unit_price into tp from ingredients where i_id = iid;
+    select unit_price into tp from ingredients where i_id = iid;
 
-update ingredients set
-s_id = sid,
-quantity = qty,
-total_price = tp*qty
-where i_id = iid;
+    update ingredients
+    set s_id        = sid,
+        quantity    = qty,
+        total_price = tp * qty
+    where i_id = iid;
 
 
 END;
@@ -584,12 +592,22 @@ $$ LANGUAGE plpgsql;
 -- select * from  order_an_ingredient(12,1,3)
 
 -- add new supplier
-CREATE OR REPLACE FUNCTION save_New_Supplier(
-sname varchar,
-svisibility boolean
-)
-RETURNS varchar AS
+CREATE OR REPLACE FUNCTION save_New_Supplier(sname varchar,
+                                             svisibility boolean)
+    RETURNS varchar AS
 $$
+
+
+BEGIN
+
+insert into supplier (name, visibility) values (sname, svisibility);
+return 'Supplier saved successfully';
+
+
+END;
+$$ LANGUAGE plpgsql;
+
+
 
 -- TODO where is the error
 -- Get all distinct order ids from order table
@@ -611,30 +629,23 @@ $$ LANGUAGE plpgsql;
 select *
 from get_all_order();
 
-BEGIN
-
-insert into supplier (name, visibility) values (sname, svisibility);
-return 'Supplier saved successfully';
-
-
-END;
-$$ LANGUAGE plpgsql;
-
 -- select * from  save_New_Supplier('dummy',True)
 
 -- get all supplier no visibility check
 CREATE OR REPLACE FUNCTION get_all_suppliers_no_visibility()
-RETURNS table (
-sid integer,
-sname varchar,
-svisible boolean
-) AS
+    RETURNS table
+            (
+                sid      integer,
+                sname    varchar,
+                svisible boolean
+            )
+AS
 $$
 
 BEGIN
 
-return query
-select * from supplier;
+    return query
+        select * from supplier;
 
 END;
 $$ LANGUAGE plpgsql;
@@ -642,18 +653,19 @@ $$ LANGUAGE plpgsql;
 -- select * from  get_all_suppliers_no_visibility()
 
 -- get a supplier visibility
-CREATE OR REPLACE FUNCTION get_supplier_visibility( id integer)
-RETURNS table (
-sid integer,
-svisible boolean
-) AS
+CREATE OR REPLACE FUNCTION get_supplier_visibility(id integer)
+    RETURNS table
+            (
+                sid      integer,
+                svisible boolean
+            )
+AS
 $$
 
 BEGIN
 
-return query
-select s_id, visibility from supplier where s_id = id;
-
+    return query
+        select s_id, visibility from supplier where s_id = id;
 
 
 END;
@@ -662,16 +674,17 @@ $$ LANGUAGE plpgsql;
 -- select * from  get_supplier_visibility(9)
 
 -- update a supplier visibility
-CREATE OR REPLACE FUNCTION update_supplier_visibility( id integer, svisibility boolean)
-RETURNS varchar AS
+CREATE OR REPLACE FUNCTION update_supplier_visibility(id integer, svisibility boolean)
+    RETURNS varchar AS
 $$
 
 BEGIN
 
-update supplier set visibility = svisibility
-where s_id = id;
+    update supplier
+    set visibility = svisibility
+    where s_id = id;
 
-return 'This supplier has been updated';
+    return 'This supplier has been updated';
 
 END;
 $$ LANGUAGE plpgsql;
@@ -679,5 +692,22 @@ $$ LANGUAGE plpgsql;
 -- select * from  update_supplier_visibility(9)
 
 
+-- Delete order after served
+CREATE OR REPLACE FUNCTION delete_order(oid VARCHAR)
+    RETURNS varchar AS
+$$
+DECLARE
+    value integer;
+BEGIN
+    with d as (delete from "order" where "order".o_id = oid
+        RETURNING *)
+    SELECT count(*)
+    INTO value
+    FROM d;
+    RETURN format('Order with %s ingredients has successfully served!', value);
 
+END;
+$$ LANGUAGE plpgsql;
 
+select *
+from delete_order('24012021131559');
