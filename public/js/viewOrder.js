@@ -10,8 +10,7 @@ window.onload = (event) => {
     viewOrderDropDown();
 }
 
-function viewOrderDropDown()
-{
+function viewOrderDropDown() {
     let body = orderData;
     var orderDDL = document.createElement("select");
     orderDDL.name = "order";
@@ -33,75 +32,54 @@ function viewOrderDropDown()
     body.appendChild(orderDDL);
 }
 
-viewOrderBTN.addEventListener("click", ()=>{
+viewOrderBTN.addEventListener("click", () => {
     console.log('view order')
 })
 
-function viewOrderTable(oid)
-{
+function viewOrderTable(oid) {
     console.log(oid)
-    fetch("http://localhost:3000/saveIngredientsInCart?pid=" + pizzaID + "&cid=" + custID + "&ingID=" + ingreID + "&oID=" + orderID + "&qty=" + qty + "&price=" + price).then((savedIngredientResponse) => {
-        savedIngredientResponse.json().then((data) => {
-            order_ID.setAttribute("id", data.cartData[0].o_id);
+    fetch("http://localhost:3000/getAllOrderDetails?oid=" + oid).then((orderDetailsResponse) => {
+        orderDetailsResponse.json().then((data) => {
+            //order_ID.setAttribute("id", data.orderDetailsData[0].oid);
+            //var uniqueid = order_ID.id + "_" + pizzaID + "_" + custID + "_" + ingreID
 
-            var uniqueid = order_ID.id + "_" + pizzaID + "_" + custID + "_" + ingreID
 
-            totalPrice = data.cartData[0].totalprice;
-
-            var body = orderCartTBL;
+            var body = orderTBL;
             var tbl = document.createElement("table");
             var tblBody = document.createElement("tbody");
-            tbl.setAttribute("id", uniqueid);
+            tbl.setAttribute("id", "orderDetailsTable");
 
-            var row = document.createElement("tr");
+
 
             ////Creating cart table
-            for (var j = 0; j < 4; j++) {
-                var cell = document.createElement("td");
-                var cellText;
+            for (var i = 0; i < data.orderDetailsData.length; i++){
+                var row = document.createElement("tr");
+                for (var j = 0; j < 3; j++) {
+                    var cell = document.createElement("td");
+                    var cellText;
+                    switch (j) {
+                        case 0:
+                            cellText = document.createTextNode(data.orderDetailsData[i].iname);
+                            break;
+                        case 1:
+                            cellText = document.createTextNode(data.orderDetailsData[i].oqty);
+                            break;
+                        case 2:
+                            cellText = document.createTextNode(data.orderDetailsData[i].sqty);
+                            break;
+                    }
 
-                switch (j) {
-                    case 0:
-                        cellText = document.createTextNode(data.cartData[0].i_name);
-                        break;
-                    case 1:
-                        cellText = document.createTextNode(data.cartData[0].unit_price);
-                        break;
-                    case 2:
-                        var values = ["1", "2", "3"];
-
-                        cellText = document.createElement("select");
-                        cellText.name = "Quantity";
-                        cellText.id = "Quantity_" + uniqueid;
-                        cellText.setAttribute("onchange", "ChangeQty(this.id)");
-
-                        for (const val of values) {
-                            var option = document.createElement("option");
-                            option.value = val;
-                            option.text = val;
-
-                            cellText.appendChild(option);
-                        }
-                        break;
-                    case 3:
-                        cellText = document.createElement("button");
-                        cellText.setAttribute("id", "remove_" + uniqueid)
-                        cellText.setAttribute("onclick", "Removerow(this.id)");
-                        var btnText = document.createTextNode("X");
-                        cellText.appendChild(btnText);
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
                 }
-
-                cell.appendChild(cellText);
-                row.appendChild(cell);
             }
+
             tblBody.appendChild(row);
 
             tbl.appendChild(tblBody);
             body.appendChild(tbl);
 
             tbl.setAttribute("border", "1");
-
-            totalPriceAmountLBL.innerHTML = totalPrice;
         })
     })
 

@@ -4,24 +4,20 @@ CREATE OR REPLACE FUNCTION get_all_order_details(oid VARCHAR)
             (
                 iname VARCHAR,
                 order_i_qty INTEGER,
-                stock_i_qty INTEGER,
-                cname VARCHAR,
-                p_size varchar
+                stock_i_qty INTEGER
             )
 AS
 $$
 DECLARE
     order_iid INTEGER;
 BEGIN
-    SELECT iid INTO order_iid FROM "order" WHERE o_id = oid;
+    SELECT i_id INTO order_iid FROM "order" WHERE o_id = oid;
     RETURN QUERY
         SELECT  ingredients.name as iname,
                 (SELECT "order".quantity as order_i_qty
                     FROM "order"
                     WHERE "order".o_id = oid),
-                ingredients.quantity as stock_i_qty,
-
-
+                ingredients.quantity as stock_i_qty
         FROM ingredients
     WHERE ingredients.i_id = order_iid;
 
@@ -29,7 +25,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 select *
-from get_all_order();
+from get_all_order_details('24012021131559');
 -- select * from  delete_ingredients(2)
 
 

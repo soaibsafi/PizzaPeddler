@@ -402,7 +402,7 @@ app.get("/getAllOrder", (request, response) => {
 app.get("/getAllOrderDetails", (request, response) => {
   let orderDetailsQuery = {
     name: "ge-all-order-details",
-    text: "select * from add_new_ingredient($1)",
+    text: "select * from get_an_order_details($1)",
     values: [
       request.query.oid
     ]
