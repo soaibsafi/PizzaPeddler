@@ -748,3 +748,21 @@ $$ LANGUAGE plpgsql;
 
 select *
 from delete_order('24012021131559');
+
+
+
+-- Delete a supplier using id
+CREATE OR REPLACE FUNCTION delete_supplier(sid INTEGER)
+    RETURNS void AS
+$$
+BEGIN
+    delete from supplier where supplier.s_id = sid;
+END;
+$$ LANGUAGE plpgsql;
+
+select *
+from delete_supplier(5);
+
+
+
+

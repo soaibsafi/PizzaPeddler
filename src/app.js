@@ -457,6 +457,20 @@ app.get("/saveSupplier", (request, response) => {
   });
 });
 
+app.get("/deleteSupplier", (request, response) => {
+  let deleteSupplierQuery = {
+    name:'save-supplier-info',
+    text: "select * from delete_supplier($1)",
+    values:[parseInt(request.query.sid)]
+  };
+
+  client.query(deleteSupplierQuery, (err, res) => {
+    response.send({
+      supplierData: res.rows,
+    });
+  });
+});
+
 app.get("/getAllSupplierNoVisibilityCheck", (request, response) => {
   let addSupplierQuery = {
     name:'get-all-suppliers-no-visibility',
