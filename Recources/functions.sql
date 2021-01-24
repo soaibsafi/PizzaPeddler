@@ -466,5 +466,111 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-select *
-from add_from_cart_to_order('23012021115743');
+-- select * from add_from_cart_to_order('23012021115743');
+
+-- remove ingredient
+CREATE OR REPLACE FUNCTION delete_ingredients(iid INTEGER)
+RETURNS varchar AS
+$$
+DECLARE
+    cart_iid INTEGER;
+    order_iid INTEGER;
+    value integer;
+
+BEGIN
+
+select COUNT (i_id) into cart_iid from cart where i_id = iid;
+select COUNT(i_id) into order_iid from "order" where i_id = iid;
+
+IF cart_iid = 0 AND order_iid = 0
+THEN
+    with d as (delete from ingredients where i_id = iid
+    RETURNING *)
+    SELECT count(*)
+    INTO value
+    FROM d;
+    RETURN 'Deleted';
+
+    ELSE
+    RETURN 'This data is existed in cart or order table';
+
+END IF;
+
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- select * from  delete_ingredients(2)
+
+-- update ingredients information
+CREATE OR REPLACE FUNCTION update_ingredients_info
+( iid integer,
+iname varchar,
+region VARCHAR,
+unitPrice numeric,
+visible boolean,
+sid integer)
+RETURNS void AS
+$$
+DECLARE
+    q integer;
+BEGIN
+select quantity into q from ingredients where i_id = iid;
+        UPDATE ingredients
+            set name = iname,
+            regional_provinance = region,
+            unit_price = unitPrice,
+            visibility = visible,
+            s_id = sid,
+            total_price = q * unitPrice
+            WHERE i_id = iid;
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- select * from  update_ingredients_info( 13,'Cheese','India',2.00,false,1)
+
+-- get all suppliers
+CREATE OR REPLACE FUNCTION getAllSupplier()
+RETURNS TABLE (sid integer,
+sname varchar) AS
+$$
+
+BEGIN
+return query
+select s_id, name  from supplier where visibility = true ;
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- select * from  getAllSupplier()
+
+-- order new ingredients
+CREATE OR REPLACE FUNCTION order_an_ingredient(
+iid integer,
+sid integer,
+qty numeric
+)
+RETURNS void AS
+$$
+
+DECLARE
+ tp numeric ;
+
+BEGIN
+
+select unit_price into tp from ingredients where i_id = iid;
+
+update ingredients set
+s_id = sid,
+quantity = qty,
+total_price = tp*qty
+where i_id = iid;
+
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- select * from  order_an_ingredient(12,1,3)
+
+
