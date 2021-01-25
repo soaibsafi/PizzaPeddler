@@ -3,6 +3,8 @@ const {Pool, Client} = require("pg");
 
 const express = require("express");
 const hbs = require("hbs");
+/***
+ * This client is for the main Database
 
 var client = new Client({
     user: "pbmdb_rw",
@@ -11,7 +13,15 @@ var client = new Client({
     password: "ingah4eiW",
     port: 5432,
 });
-///client.connect()
+*/
+
+var client = new Client({
+    user: "test_pbdm_rw",
+    host: "pgsql.hrz.tu-chemnitz.de",
+    database: "test_pbdm",
+    password: "Iexae2eili",
+    port: 5432,
+});
 
 client.connect((err) => {
     if (err) {
