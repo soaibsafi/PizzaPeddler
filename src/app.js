@@ -60,7 +60,7 @@ hbs.registerPartials(partiaslPath);
 // });
 
 app.get("", (req, res) => {
-    res.render("index", {
+    res.render("welcome", {
         title: "Weather App",
         name: "Soaib",
     });
@@ -115,7 +115,7 @@ app.get("/weather", (req, res) => {
 app.get("/getallcustomer", (request, response) => {
     var query = {
         text: "select * from get_all_customer()",
-       // values: [parseInt(request.query.id)],
+        // values: [parseInt(request.query.id)],
     };
 
     client.query(query, (err, res) => {
