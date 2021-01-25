@@ -785,3 +785,19 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Get all order for order view
+CREATE OR REPLACE FUNCTION get_all_order()
+    RETURNS table
+            (
+                oid VARCHAR
+            )
+AS
+$$
+BEGIN
+    RETURN QUERY
+        SELECT DISTINCT o_id
+        FROM "order";
+
+END;
+$$ LANGUAGE plpgsql;
+
