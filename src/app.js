@@ -16,10 +16,10 @@ var client = new Client({
 */
 
 var client = new Client({
-    user: "test_pbdm_rw",
+    user: "temp_db_rw",
     host: "pgsql.hrz.tu-chemnitz.de",
-    database: "test_pbdm",
-    password: "Iexae2eili",
+    database: "temp_db",
+    password: "ooch0Oire",
     port: 5432,
 });
 
@@ -31,114 +31,31 @@ client.connect((err) => {
     }
 });
 
-const geocode = require("./utils/geocode");
-const forecast = require("./utils/forecast");
 
 const app = express();
-//Setup static directory to serve
 
 app.use(express.json());
-
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-        "Access-Control-Allow-Headers",
-        "Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method"
-    );
-    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-    res.header("Allow", "GET, POST, OPTIONS, PUT, DELETE");
-    next();
-});
 
 //Define path for Express config
 const publicDirectoryPath = path.join(__dirname, "../public");
 const viewPath = path.join(__dirname, "../templates/views");
-const partiaslPath = path.join(__dirname, "../templates/partials");
-
 app.use(express.static(publicDirectoryPath));
 
 // Setup handlebars engine and view location
 app.set("view engine", "hbs"); //set the view engine as hadlebars
 app.set("views", viewPath);
-hbs.registerPartials(partiaslPath);
 
-// app.get("", (req, res) => {
-//     res.render("index", {
-//         title: "Weather App",
-//         name: "Soaib",
-//     });
-// });
 
 app.get("", (req, res) => {
     res.render("welcome", {
-        title: "Weather App",
-        name: "Soaib",
     });
 });
 
-app.get("/about", (req, res) => {
-    res.render("index", {
-        title: "About me",
-        name: "Soaib",
-    });
-});
-app.get("/help", (req, res) => {
-    res.render("index", {
-        title: "Help",
-        name: "Soaib",
-    });
-});
-app.get("/weather", (req, res) => {
-    if (!req.query.address) {
-        return res.send({
-            error: "You have to provide an address",
-        });
-    }
-    geocode(
-        req.query.address,
-        (error, {latitude, longitude, location} = {}) => {
-            if (error) {
-                return res.send({
-                    error: "Please provide a valid address.",
-                });
-            }
-            forecast(latitude, longitude, (error, forecastdata) => {
-                if (error) {
-                    return res.send({
-                        error: "Please provide a valid address",
-                    });
-                }
-                res.send({
-                    forecast: forecastdata,
-                    location: location,
-                    address: req.query.address,
-                });
-            });
-        }
-    );
-});
 
-//// Calling user by its id
-
-
-
+// Routes for customer view
 app.get("/getallcustomer", (request, response) => {
     var query = {
         text: "select * from get_all_customer()",
-        // values: [parseInt(request.query.id)],
-    };
-
-    client.query(query, (err, res) => {
-        response.send( {
-            userData: res.rows,
-        });
-    });
-});
-
-
-app.get("/getallbaker", (request, response) => {
-    var query = {
-        text: "select * from get_all_baker()",
         // values: [parseInt(request.query.id)],
     };
 
@@ -181,50 +98,6 @@ app.get("/getPizzaSize", (request, response) => {
     });
 });
 
-app.get("/getAllIngredients", (request, response) => {
-    var ingredientsQuery = {
-        name: "fetch-ingredients",
-        text: "select * from get_all_ingrediants ()",
-    };
-    client.query(ingredientsQuery, (err, res) => {
-        response.send({
-            ingredientsData: res.rows,
-        });
-    });
-});
-
-
-// All About baker
-app.get("/baker", (request, response) => {
-    if (!request.query.id) {
-        return response.send({
-            error: "You have to provide an user id",
-        });
-    }
-
-    let bakerQuery = {
-        text: "select * from get_baker($1)",
-        values: [parseInt(request.query.id)],
-    };
-    client.query(bakerQuery, (err, res) => {
-        response.render("baker", {
-            username: res.rows[0]["name"],
-        });
-    });
-});
-
-app.get("/getAllIngredientsForBaker", (request, response) => {
-    let ingredientsQueryBaker = {
-        name: "fetch-ingredients-baker",
-        text: "select * from get_all_ingrediants_baker ()",
-    };
-    client.query(ingredientsQueryBaker, (err, res) => {
-        response.send({
-            ingredientsData: res.rows,
-        });
-    });
-});
-
 app.get("/checkDuplicateIngredientsInCart", (request, response) => {
     let ingredientsQueryBaker = {
         name: "check-duplicate-ingredients-cart",
@@ -259,22 +132,6 @@ app.get("/saveIngredientsInCart", (request, response) => {
     });
 })
 
-
-// Server
-app.get("/getIngredientInfo", (request, response) => {
-
-    var ingredientsQuery = {
-        name: "fetch-one-ingredient-info",
-        text: "select * from get_ingrediant($1)",
-        values: [parseInt(request.query.id)]
-    };
-    client.query(ingredientsQuery, (err, res) => {
-        response.send({
-            ingredientData: res.rows,
-        });
-    });
-});
-
 app.get("/updatePizzaId", (request, response) => {
     var pizzaIdUpdateQuery = {
         name: "update-pizza-id-cart",
@@ -306,7 +163,6 @@ app.get("/removeIngredientsFromCart", (request, response) => {
     });
 });
 
-
 app.get("/updateIngredientQtyinCart", (request, response) => {
     var ingerdientQtyQuery = {
         name: "update-ingredient-qty-incart",
@@ -325,7 +181,6 @@ app.get("/updateIngredientQtyinCart", (request, response) => {
     });
 });
 
-// Baker View
 app.get("/confirmOrder", (request, response) => {
 
     let confirmOrderQuery = {
@@ -340,6 +195,65 @@ app.get("/confirmOrder", (request, response) => {
     });
 });
 
+/*****************************************************/
+
+// Routes For Baker View
+app.get("/getallbaker", (request, response) => {
+    var query = {
+        text: "select * from get_all_baker()",
+        // values: [parseInt(request.query.id)],
+    };
+
+    client.query(query, (err, res) => {
+        response.send( {
+            userData: res.rows,
+        });
+    });
+});
+
+app.get("/baker", (request, response) => {
+    if (!request.query.id) {
+        return response.send({
+            error: "You have to provide an user id",
+        });
+    }
+
+    let bakerQuery = {
+        text: "select * from get_baker($1)",
+        values: [parseInt(request.query.id)],
+    };
+    client.query(bakerQuery, (err, res) => {
+        response.render("baker", {
+            username: res.rows[0]["name"],
+        });
+    });
+});
+
+app.get("/getAllIngredientsForBaker", (request, response) => {
+    let ingredientsQueryBaker = {
+        name: "fetch-ingredients-baker",
+        text: "select * from get_all_ingrediants_baker ()",
+    };
+    client.query(ingredientsQueryBaker, (err, res) => {
+        response.send({
+            ingredientsData: res.rows,
+        });
+    });
+});
+
+app.get("/getIngredientInfo", (request, response) => {
+
+    var ingredientsQuery = {
+        name: "fetch-one-ingredient-info",
+        text: "select * from get_ingrediant($1)",
+        values: [parseInt(request.query.id)]
+    };
+    client.query(ingredientsQuery, (err, res) => {
+        response.send({
+            ingredientData: res.rows,
+        });
+    });
+});
 
 app.get("/updateIngredientFromBaker", (request, response) => {
     console.log('updateIngredientFromBaker Route')
@@ -362,9 +276,7 @@ app.get("/updateIngredientFromBaker", (request, response) => {
     });
 });
 
-// Delete Single Ingredient from Ingredient table by Baker
 app.get("/deleteIngredientFromBaker", (request, response) => {
-// TODO
     let deleteIngredientQuery = {
         name: "delete-ingredient-from-baker",
         text: "select * from delete_ingredients($1)",
@@ -377,7 +289,6 @@ app.get("/deleteIngredientFromBaker", (request, response) => {
     });
 });
 
-
 app.get("/getAllSupplier", (request, response) => {
     let supplierQuery = {
         text: "select * from getallsupplier()",
@@ -389,7 +300,6 @@ app.get("/getAllSupplier", (request, response) => {
         });
     });
 });
-
 
 app.get("/newIngredient", (request, response) => {
     if (!request.query.id) {
@@ -409,7 +319,6 @@ app.get("/newIngredient", (request, response) => {
     });
 });
 
-//http://localhost:3000/addNewIngredient?iname=Flour&rp=Bangladesh&up=4.50&qty=10&visibility=True&sid=5
 app.get("/addNewIngredient", (request, response) => {
     let updateIngredientQuery = {
         name: "add-new-ingredient-baker",
@@ -429,7 +338,6 @@ app.get("/addNewIngredient", (request, response) => {
         });
     });
 });
-
 
 app.get("/getAllOrder", (request, response) => {
     let supplierQuery = {
@@ -459,7 +367,6 @@ app.get("/getAllOrderDetails", (request, response) => {
     });
 });
 
-
 app.get("/viewOrder", (request, response) => {
     if (!request.query.id) {
         return response.send({
@@ -477,7 +384,6 @@ app.get("/viewOrder", (request, response) => {
         });
     });
 });
-
 
 app.get("/manageSuppliers", (request, response) => {
     response.render("supplier", {
@@ -528,7 +434,6 @@ app.get("/getAllSupplierNoVisibilityCheck", (request, response) => {
     });
 });
 
-
 app.get("/getSupplierVisibility", (request, response) => {
     let addSupplierQuery = {
         name: 'get-suppliers-visibility',
@@ -542,7 +447,6 @@ app.get("/getSupplierVisibility", (request, response) => {
         });
     });
 });
-
 
 app.get("/updateSupplierVisibility", (request, response) => {
     let addSupplierQuery = {
@@ -578,7 +482,6 @@ app.get("/deliverAnOrder", (request, response) => {
     });
 });
 
-
 app.get("/placeOrderByBaker", (request, response) => {
     let placeOrderBakerQuery = {
         name: 'place-an-order-by-baker',
@@ -597,46 +500,40 @@ app.get("/placeOrderByBaker", (request, response) => {
     });
 });
 
-
 app.get("/getAllIngredientsForOrder", (request, response) => {
-  var ingredientsQuery = {
-    name: "fetch-ingredients-for-order",
-    text: "select * from get_all_ingredient_for_order ()",
-  };
-  client.query(ingredientsQuery, (err, res) => {
-    response.send({
-      ingredientsData: res.rows,
+    var ingredientsQuery = {
+        name: "fetch-ingredients-for-order",
+        text: "select * from get_all_ingredient_for_order ()",
+    };
+    client.query(ingredientsQuery, (err, res) => {
+        response.send({
+            ingredientsData: res.rows,
+        });
     });
-  });
 });
 
+/*****************************************************/
 
+// Routes for both customer and baker views
+app.get("/getAllIngredients", (request, response) => {
+    var ingredientsQuery = {
+        name: "fetch-ingredients",
+        text: "select * from get_all_ingrediants ()",
+    };
+    client.query(ingredientsQuery, (err, res) => {
+        response.send({
+            ingredientsData: res.rows,
+        });
+    });
+});
+
+/*****************************************************/
+
+// Server and Management
 app.listen(3000, () => {
     console.log("Server is up on port 3000");
 });
 
-app.get("/products", (req, res) => {
-    if (!req.query.search) {
-        return res.send({
-            error: "You must provide a search term",
-        });
-    }
-
-    console.log(req.query);
-    res.send({
-        products: [],
-    });
-});
-
-app.get("/help/*", (req, res) => {
-    res.render("404", {
-        title: "404",
-        name: "Soaib",
-        errorMessage: "Help articles not found!",
-    });
-});
-
-// Need to be at last.
 app.get("*", (req, res) => {
     res.render("404", {
         title: "404",
@@ -644,16 +541,3 @@ app.get("*", (req, res) => {
         errorMessage: "Page not found!",
     });
 });
-
-/*
-app.get('', (req, res)=> {
-    res.send('Hello Express');
-});
-
-app.get('/help', (req, res) => {
-    res.send('Help page')
-})
-
-app.get('/about', (req, res) => {
-    res.send('About page')
-}) */
