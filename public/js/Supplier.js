@@ -16,7 +16,7 @@ window.onload = (event) => {
     checkResponse.json().then((data) => {
 
       for (var i = 0; i < data.supplierData.length; i++) {
-        var optName = new Option(
+        optName = new Option(
           data.supplierData[i].sname,
           data.supplierData[i].sid
         );
@@ -56,18 +56,21 @@ updateSuppBTN.addEventListener("click", (e) => {
 
 saveNewSuppBTN.addEventListener("click", (e) => {
   var name = newSupNameText.value;
+  var visible = visibiltyDLL.value;
   var visibility = (visibiltyDLL.value == 'TRUE');
 
-  if (name) {
-    fetch("http://localhost:3000/saveSupplier?name=" + name + "&visible=" + visibility).then((checkResponse) => {
-      checkResponse.json().then((data) => {
-        if (data.supplierData[0].save_new_supplier) alert(data.supplierData[0].save_new_supplier);
-        window.location.reload();
+  if(visible){
+    if (name) {
+      fetch("http://localhost:3000/saveSupplier?name=" + name + "&visible=" + visibility).then((checkResponse) => {
+        checkResponse.json().then((data) => {
+          if (data.supplierData[0].save_new_supplier) alert(data.supplierData[0].save_new_supplier);
+          window.location.reload();
+        });
       });
-    });
-  } else {
-    alert("Please supplier name");
-  }
+    } else {
+      alert("Please supplier name");
+    }
+  }else alert("Please select visibility");
 })
 
 deleteSuppBTN.addEventListener("click", (e) => {

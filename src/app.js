@@ -244,7 +244,7 @@ app.get("/saveIngredientsInCart", (request, response) => {
 
     client.query(saveInCartQuery, (err, res) => {
         response.send({
-            cartData: res.rows,
+            cartData: res.rows
         });
     });
 })
@@ -484,14 +484,14 @@ app.get("/saveSupplier", (request, response) => {
 
     client.query(addSupplierQuery, (err, res) => {
         response.send({
-            supplierData: res.rows,
+            supplierData: res.rows
         });
     });
 });
 
 app.get("/deleteSupplier", (request, response) => {
     let deleteSupplierQuery = {
-        name: 'save-supplier-info',
+        name: 'delete-supplier-info',
         text: "select * from delete_supplier($1)",
         values: [parseInt(request.query.sid)]
     };
@@ -499,7 +499,7 @@ app.get("/deleteSupplier", (request, response) => {
     client.query(deleteSupplierQuery, (err, res) => {
         console.log(res);
         response.send({
-            supplierData: res,
+            supplierData: res
         });
     });
 });
