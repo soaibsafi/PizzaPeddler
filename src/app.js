@@ -52,8 +52,15 @@ app.set("view engine", "hbs"); //set the view engine as hadlebars
 app.set("views", viewPath);
 hbs.registerPartials(partiaslPath);
 
+// app.get("", (req, res) => {
+//     res.render("index", {
+//         title: "Weather App",
+//         name: "Soaib",
+//     });
+// });
+
 app.get("", (req, res) => {
-    res.render("index", {
+    res.render("welcome", {
         title: "Weather App",
         name: "Soaib",
     });
@@ -102,6 +109,35 @@ app.get("/weather", (req, res) => {
 });
 
 //// Calling user by its id
+
+
+
+app.get("/getallcustomer", (request, response) => {
+    var query = {
+        text: "select * from get_all_customer()",
+       // values: [parseInt(request.query.id)],
+    };
+
+    client.query(query, (err, res) => {
+        response.send( {
+            userData: res.rows,
+        });
+    });
+});
+
+
+app.get("/getallbaker", (request, response) => {
+    var query = {
+        text: "select * from get_all_baker()",
+        // values: [parseInt(request.query.id)],
+    };
+
+    client.query(query, (err, res) => {
+        response.send( {
+            userData: res.rows,
+        });
+    });
+});
 
 app.get("/user", (request, response) => {
     if (!request.query.id) {
@@ -461,8 +497,9 @@ app.get("/deleteSupplier", (request, response) => {
     };
 
     client.query(deleteSupplierQuery, (err, res) => {
+        console.log(res);
         response.send({
-            supplierData: res.rows,
+            supplierData: res,
         });
     });
 });
