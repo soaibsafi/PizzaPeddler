@@ -3,35 +3,35 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Customer</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer</title>
+    <link rel="stylesheet" href="css/style.css">
 
 
 </head>
 
 <body>
-  <div class="main-content">
+<div class="main-content">
     <h2>Welcome {{username}}</h2>
     <h3>Order your pizza from here</h3>
-      <hr/>
-      <label for="pizzaSize">Choose Pizza Size:</label>
-      <select name="pizzaname" id="pizzaDDL" onchange="pizzaSizeChange()">
+    <hr/>
+    <label for="pizzaSize">Choose Pizza Size:</label>
+    <select name="pizzaname" id="pizzaDDL" onchange="pizzaSizeChange()">
         <option value=''>Select a pizza size</option>
-      </select>
-      <br/><br/>
-      <div id="ingredientsTBL">
-      </div>
-      <br/><br/>
-      <div id="orderCartTBL">
-      </div>
-      <label for="total" id="totalPriceLBL">Total Price:</label>
-      <label for="totalAmount" id="totalPriceAmountLBL">0,00</label>
-      <button type="button" id="confirmOrderBtn">Order it!</button>
+    </select>
+    <br/><br/>
+    <div id="ingredientsTBL">
+    </div>
+    <br/><br/>
+    <div id="orderCartTBL">
+    </div>
+    <label for="total" id="totalPriceLBL">Total Price:</label>
+    <label for="totalAmount" id="totalPriceAmountLBL">0,00</label>
+    <button type="button" id="confirmOrderBtn">Order it!</button>
 
-  </div>
-  <script src="/js/customer.js"></script>
+</div>
+<script src="/js/customer.js"></script>
 
 </body>
 
