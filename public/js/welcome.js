@@ -11,7 +11,14 @@ var userLoginBTN = "userLoginBTN";
 
 bakerBTN.addEventListener("click", () =>{
 
+  var userSelectLBL = document.getElementById(userSelectLBL);
+  if (userSelectLBL) userSelectLBL.parentNode.removeChild(userSelectLBL);
 
+  var userSelect = document.getElementById(userSelect);
+  if (userSelect) userSelect.parentNode.removeChild(userSelect);
+
+  var userLoginBTN = document.getElementById(userLoginBTN);
+  if (userLoginBTN) userLoginBTN.parentNode.removeChild(userLoginBTN);
 
   fetch("http://localhost:3000/getallbaker").then((response) => {
     response.json().then((data) => {
@@ -58,6 +65,15 @@ bakerBTN.addEventListener("click", () =>{
 
 
 customerBTN.addEventListener("click",() => {
+
+  var userSelectLBL = document.getElementById(userSelectLBL);
+  if (userSelectLBL) userSelectLBL.parentNode.removeChild(userSelectLBL);
+
+  var userSelect = document.getElementById(userSelect);
+  if (userSelect) userSelect.parentNode.removeChild(userSelect);
+
+  var userLoginBTN = document.getElementById(userLoginBTN);
+  if (userLoginBTN) userLoginBTN.parentNode.removeChild(userLoginBTN);
 
   fetch("http://localhost:3000/getallcustomer").then((response) => {
     response.json().then((data) => {
