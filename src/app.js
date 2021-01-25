@@ -588,6 +588,19 @@ app.get("/placeOrderByBaker", (request, response) => {
 });
 
 
+app.get("/getAllIngredientsForOrder", (request, response) => {
+  var ingredientsQuery = {
+    name: "fetch-ingredients-for-order",
+    text: "select * from get_all_ingredient_for_order ()",
+  };
+  client.query(ingredientsQuery, (err, res) => {
+    response.send({
+      ingredientsData: res.rows,
+    });
+  });
+});
+
+
 app.listen(3000, () => {
     console.log("Server is up on port 3000");
 });
