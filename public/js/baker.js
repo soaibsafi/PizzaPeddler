@@ -209,6 +209,7 @@ function UpdateIngredient(ingredientId)
       var supplierNameDDL = document.createElement("select");
       supplierNameDDL.name = "Supplier";
       supplierNameDDL.id = "snamedata_" + ingredient_ID.id;
+
       fetch("http://localhost:3000/getAllSupplier").then((response) => {
         response.json().then((data) => {
           console.log(data.supplierData);
