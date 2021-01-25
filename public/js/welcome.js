@@ -119,10 +119,14 @@ removeView();
 
 function login(){
   var userid = document.getElementById("userSelect").value;
+  if(userid)
   window.location.href = "http://localhost:3000/user?id="+userid;
+  else alert("Please select a customer");
 }
 
 function loginBaker(){
   var userid = document.getElementById("userSelect").value;
+  if(userid)
   window.location.href = "http://localhost:3000/baker?id="+userid;
+  else alert("Please select a baker")
 }
