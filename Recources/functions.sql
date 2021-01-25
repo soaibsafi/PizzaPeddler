@@ -14,8 +14,6 @@ BEGIN
         FROM public.baker;
 END;
 $$ LANGUAGE plpgsql;
-select *
-from get_all_baker();
 
 
 -- Get All pizza
@@ -34,11 +32,9 @@ BEGIN
         FROM public.pizza;
 END;
 $$ LANGUAGE plpgsql;
-select *
-from get_all_pizza_size();
 
 
--- Cofirm order
+-- Confirm order
 CREATE OR REPLACE FUNCTION confirm_order(pid INTEGER,
                                          cid INTEGER,
                                          iid INTEGER,
@@ -77,8 +73,6 @@ BEGIN
         WHERE ingredients.visibility = true;
 END;
 $$ LANGUAGE plpgsql;
-select *
-from get_all_ingrediants();
 
 
 -- Add Ingredients
@@ -109,8 +103,6 @@ BEGIN
             s_id);
 END;
 $$ LANGUAGE plpgsql;
-select *
-from add_new_ingredient('Tomato', 'Germany', 2.49, 5, true, 2);
 
 -- get all ingredients for baker
 CREATE OR REPLACE FUNCTION get_all_ingrediants_baker()
@@ -142,8 +134,7 @@ BEGIN
         WHERE ingredients.s_id = supplier.s_id;
 END;
 $$ LANGUAGE plpgsql;
-SELECT *
-FROM get_all_ingrediants_baker();
+
 
 -- change visibility for ingredients
 CREATE OR REPLACE FUNCTION change_ingredient_visibility(id INTEGER) RETURNS VOID AS
@@ -165,8 +156,7 @@ BEGIN
     WHERE ingredients.i_id = id;
 END;
 $$ LANGUAGE plpgsql;
-SELECT *
-FROM change_ingredient_visibility(3);
+
 
 -- GET Customer
 CREATE OR REPLACE FUNCTION get_customer(id INTEGER)
@@ -185,8 +175,7 @@ BEGIN
         WHERE customer.c_id = id;
 END;
 $$ LANGUAGE plpgsql;
-select *
-from get_customer(3);
+
 
 -- get single ingredient
 CREATE OR REPLACE FUNCTION get_ingrediant(id INTEGER)
@@ -223,9 +212,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-select *
-from get_ingrediant(3);
-
 
 -- GET Baker
 CREATE OR REPLACE FUNCTION get_baker(id INTEGER)
@@ -244,9 +230,6 @@ BEGIN
         WHERE baker.b_id = id;
 END;
 $$ LANGUAGE plpgsql;
-select *
-from get_baker(2);
-
 
 
 -- Check if the ingredient exist in the cart table
@@ -268,9 +251,6 @@ BEGIN
     END IF;
 END;
 $$ LANGUAGE plpgsql;
-
-SELECT *
-FROM check_ingredient_in_cart('22012021210415', 5, 5);
 
 
 -- save data in cart table
@@ -326,8 +306,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-select *
-from save_order_in_cart(1, 2, 4, '', 1, 4.00)
 
 -- update pizza id in cart table
 CREATE OR REPLACE FUNCTION update_pizza_id(pid INTEGER,
@@ -356,9 +334,6 @@ BEGIN
 
 END;
 $$ LANGUAGE plpgsql;
-
--- select * from update_pizza_id (3, '23012021101814')
-
 
 -- update ingredient qty in cart table
 CREATE OR REPLACE FUNCTION update_ingredient_qty(pid INTEGER,
@@ -402,9 +377,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- select * from update_ingredient_qty(1, 1, 2, '23012021115857', 16)
-
-
+-- Remove item from cart table
 CREATE OR REPLACE FUNCTION remove_item_from_cart(oid VARCHAR,
                                                  pid INTEGER,
                                                  iid INTEGER,
@@ -433,7 +406,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
---select * from remove_item_from_cart('22012021222912', 1, 2, 1);
 
 -- Procedure  for deleting items from cart when that item is being inserted into order.
 CREATE
@@ -453,11 +425,11 @@ $$
 
 
 -- Trigger to call removing item from cart after inserting into order
-    CREATE TRIGGER order_insert_trigger
+CREATE TRIGGER order_insert_trigger
     AFTER INSERT
     ON "order"
     FOR EACH ROW
-    EXECUTE PROCEDURE remove_item_on_order_insert();
+EXECUTE PROCEDURE remove_item_on_order_insert();
 
 
 -- Procedure to add item from cart to order
@@ -482,8 +454,6 @@ BEGIN
 
 END;
 $$ LANGUAGE plpgsql;
-
--- select * from add_from_cart_to_order('23012021115743');
 
 -- remove ingredient
 CREATE OR REPLACE FUNCTION delete_ingredients(iid INTEGER)
@@ -517,7 +487,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- select * from  delete_ingredients(2)
 
 -- update ingredients information
 CREATE OR REPLACE FUNCTION update_ingredients_info(iid integer,
@@ -544,7 +513,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- select * from  update_ingredients_info( 13,'Cheese','India',2.00,false,1)
 
 -- get all suppliers
 CREATE OR REPLACE FUNCTION getAllSupplier()
@@ -563,7 +531,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- select * from  getAllSupplier()
 
 -- order new ingredients
 CREATE OR REPLACE FUNCTION order_an_ingredient(iid integer,
@@ -589,7 +556,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- select * from  order_an_ingredient(12,1,3)
 
 -- add new supplier
 CREATE OR REPLACE FUNCTION save_New_Supplier(sname varchar,
@@ -606,7 +572,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- select * from  save_New_Supplier('dummy',True)
 
 -- get all supplier no visibility check
 CREATE OR REPLACE FUNCTION get_all_suppliers_no_visibility()
@@ -627,7 +592,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- select * from  get_all_suppliers_no_visibility()
 
 -- get a supplier visibility
 CREATE OR REPLACE FUNCTION get_supplier_visibility(id integer)
@@ -648,7 +612,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- select * from  get_supplier_visibility(9)
 
 -- update a supplier visibility
 CREATE OR REPLACE FUNCTION update_supplier_visibility(id integer, svisibility boolean)
@@ -666,7 +629,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- select * from  update_supplier_visibility(9)
 
 -- show an order details
 
@@ -675,13 +637,13 @@ drop function get_an_order_details(id varchar);
 CREATE OR REPLACE FUNCTION get_an_order_details(id varchar)
     RETURNS table
             (
-                oid   VARCHAR,
-                oqty  INTEGER,
-                iname text,
-                sQty  integer,
-                pname text,
-                cname text,
-                iid   integer,
+                oid    VARCHAR,
+                oqty   INTEGER,
+                iname  text,
+                sQty   integer,
+                pname  text,
+                cname  text,
+                iid    integer,
                 status text
             )
 AS
@@ -697,10 +659,11 @@ BEGIN
                p.size::text,
                c.name::text,
                o.i_id,
-               ( CASE WHEN o.quantity > i.quantity THEN 'Out of Stock'
-                      ELSE 'In stock'
+               (CASE
+                    WHEN o.quantity > i.quantity THEN 'Out of Stock'
+                    ELSE 'In stock'
                    END
-                   ) as s
+                   )      as s
 
         from "order" as o
 
@@ -715,9 +678,6 @@ BEGIN
 
 END;
 $$ LANGUAGE plpgsql;
-
--- select * from  get_an_order_details('24012021225816')
-
 
 
 
@@ -743,10 +703,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- select * from  deliver_an_order('24012021131559',15,1)
-
-
-
 
 -- Delete order after served
 CREATE OR REPLACE FUNCTION delete_order(oid VARCHAR)
@@ -765,8 +721,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-select *
-from delete_order('24012021131559');
 
 -- update ingredient qty
 drop function update_ingredient_info(id varchar);
@@ -791,8 +745,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- select * from  update_ingredient_info(5,1,15)
-
 
 
 -- Delete a supplier using id
@@ -804,40 +756,40 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-select *
-from delete_supplier(5);
-
 
 
 -- GEt the details of an order
 CREATE OR REPLACE FUNCTION get_an_order_details(id varchar)
     RETURNS table
             (
-                oid VARCHAR,
-                oqty INTEGER,
+                oid   VARCHAR,
+                oqty  INTEGER,
                 iname text,
-                sQty integer,
+                sQty  integer,
                 pname text,
                 cname text,
-                iid integer
-
---   ,status text
-            ) AS
+                iid   integer
+            )
+AS
 $$
 
 BEGIN
 
     return query
-        select o.o_id, o.quantity as oQty , CONCAT(i.name, ' (', i.regional_provinance, ')')::text, i.quantity as sQty,
-               p.size::text,c.name::text,o.i_id
+        select o.o_id,
+               o.quantity as oQty,
+               CONCAT(i.name, ' (', i.regional_provinance, ')')::text,
+               i.quantity as sQty,
+               p.size::text,
+               c.name::text,
+               o.i_id
         from "order" as o
 
                  join customer as c on o.c_id = c.c_id
                  join ingredients as i on o.i_id = i.i_id
                  join pizza as p on o.p_id = p.p_id
 
-        where
-                o_id=id
+        where o_id = id
           and o.i_id in (select i_id from ingredients)
           and o.c_id = c.c_id
           and o.p_id = p.p_id;
@@ -850,9 +802,11 @@ drop function get_all_customer();
 
 CREATE OR REPLACE FUNCTION get_all_customer()
     RETURNS table
-            ( id integer,
-              cname text
-            ) AS
+            (
+                id    integer,
+                cname text
+            )
+AS
 $$
 
 BEGIN
@@ -863,15 +817,11 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- select * from  get_all_customer()
-
-
-
 
 CREATE OR REPLACE FUNCTION get_all_ingredient_for_order()
     RETURNS TABLE
             (
-                i_id      integer,
+                i_id           integer,
                 IngredientName text
             )
 AS
@@ -884,4 +834,3 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT * FROM get_all_ingredient_for_order();
