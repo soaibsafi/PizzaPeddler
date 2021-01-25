@@ -141,9 +141,8 @@ SELECT ingredients.i_id,
        ingredients.visibility,
        ingredients.total_price,
        supplier.name    AS s_name
-FROM public.ingredients,
-     public.supplier
-WHERE ingredients.s_id = supplier.s_id;
+FROM public.ingredients JOIN
+     public.supplier ON ingredients.s_id = supplier.s_id;
 END;
 $$
 LANGUAGE plpgsql;
