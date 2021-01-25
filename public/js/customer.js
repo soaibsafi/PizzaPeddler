@@ -205,11 +205,10 @@ function Removerow(id) {
 
   fetch("http://localhost:3000/removeIngredientsFromCart?oid=" + oid + "&pid=" + pid + "&iid=" + iid + "&cid=" + cid).then((checkResponse) => {
     checkResponse.json().then((data) => {
-      if (data.removedData[0].remove_item_from_cart.length) {
-        var tbl = document.getElementById(tblID);
-        if (tbl) tbl.parentNode.removeChild(tbl);
-        totalPriceAmountLBL.innerHTML = data.removedData[0].remove_item_from_cart;
-      }
+      var tbl = document.getElementById(tblID);
+      if (tbl) tbl.parentNode.removeChild(tbl);
+      totalPriceAmountLBL.innerHTML = data.removedData[0].remove_item_from_cart ?
+          data.removedData[0].remove_item_from_cart : '0,00 €';
     });
   });
 
@@ -236,17 +235,16 @@ function UpdateTotalPrice() {
 }
 
 confirmOrderBtn.addEventListener("click", (e) => {
-  if(order_ID.id){
-  //console.log(pizzaDDL.value);
-  fetch("http://localhost:3000/confirmOrder?id=" + order_ID.id).then((checkResponse) => {
-    checkResponse.json().then((data) => {
-      //console.log(data)
-      alert(data.confirmOrderData[0].add_from_cart_to_order);
-      window.location.reload();
+  if (order_ID.id) {
+    //console.log(pizzaDDL.value);
+    fetch("http://localhost:3000/confirmOrder?id=" + order_ID.id).then((checkResponse) => {
+      checkResponse.json().then((data) => {
+        //console.log(data)
+        alert(data.confirmOrderData[0].add_from_cart_to_order);
+        window.location.reload();
+      });
     });
-  });
-  }
-  else{
+  } else {
     alert("You haven't select any ingredient(s).")
   }
 });

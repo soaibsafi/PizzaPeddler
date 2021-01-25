@@ -16,10 +16,10 @@ var client = new Client({
 */
 
 var client = new Client({
-    user: "temp_db_rw",
+    user: "test_pbdm_rw",
     host: "pgsql.hrz.tu-chemnitz.de",
-    database: "temp_db",
-    password: "ooch0Oire",
+    database: "test_pbdm",
+    password: "Iexae2eili",
     port: 5432,
 });
 
