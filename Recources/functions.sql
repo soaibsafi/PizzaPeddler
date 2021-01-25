@@ -845,6 +845,27 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- get all customer
+drop function get_all_customer();
+
+CREATE OR REPLACE FUNCTION get_all_customer()
+    RETURNS table
+            ( id integer,
+              cname text
+            ) AS
+$$
+
+BEGIN
+
+    return query
+        select c_id, name::text from customer;
+
+END;
+$$ LANGUAGE plpgsql;
+
+-- select * from  get_all_customer()
+
+
 
 
 CREATE OR REPLACE FUNCTION get_all_ingredient_for_order()
