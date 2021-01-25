@@ -652,7 +652,7 @@ BEGIN
     return query
         select o.o_id,
                o.quantity as oQty,
-               i.name::text,
+               CONCAT(i.name, ' (', i.regional_provinance, ')') as IngredientName,
                i.quantity as sQty,
                p.size::text,
                c.name::text,
