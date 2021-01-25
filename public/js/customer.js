@@ -95,9 +95,6 @@ function AddIngredients(ingredientID) {
 
         fetch("http://localhost:3000/checkDuplicateIngredientsInCart?oid=" + orderID + "&iID=" + ingreID + "&cid=" + custID).then((checkResponse) => {
           checkResponse.json().then((data) => {
-
-            // console.log(data);
-
             if (data.checkIngredientsData[0].check_ingredient_in_cart.length) {
               alert(data.checkIngredientsData[0].check_ingredient_in_cart)
 
