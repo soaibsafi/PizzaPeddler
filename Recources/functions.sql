@@ -265,13 +265,15 @@ CREATE OR REPLACE FUNCTION save_order_in_cart(pid INTEGER,
                 o_id       VARCHAR,
                 i_name     TEXT,
                 unit_price MONEY,
-                totalprice MONEY
+                totalprice MONEY,
+                pizza_price money
+
             )
 AS
 $$
 DECLARE
     orderid VARCHAR;
-
+    pizzaPrice money;
 BEGIN
     IF oid = '' THEN
         SELECT TO_CHAR(NOW(), 'DDMMYYYYHH24MISS') INTO orderid;
@@ -279,8 +281,11 @@ BEGIN
         orderid = oid;
     END IF;
 
-    INSERT INTO cart (p_id, c_id, o_id, i_id, quantity, price, total_price)
-    values (pid, cid, orderid, iid, qty, price::money, qty * price);
+    select pizza.price into pizzaPrice from pizza where pizza.p_id = pid;
+
+
+    INSERT INTO cart (p_id, c_id, o_id, i_id, quantity, price, total_price, p_price)
+    values (pid, cid, orderid, iid, qty, price::money, qty * price, pizzaPrice);
 
     RETURN QUERY
         select cart.o_id             AS o_id,
@@ -295,14 +300,10 @@ BEGIN
                        ')'
                    )
                                      as i_name,
-               (SELECT ingredients.unit_price as unit_price
-                FROM ingredients
-                where ingredients.i_id = iid),
-               SUM(cart.total_price) AS totalprice
-        FROM public.cart
+               (SELECT ingredients.unit_price as unit_price  FROM ingredients where ingredients.i_id = iid),
+               SUM(cart.total_price)+cart.p_price AS totalprice, cart.p_price FROM public.cart
         WHERE cart.o_id = orderid
-        GROUP BY cart.o_id;
-
+        GROUP BY cart.o_id,cart.p_price;
 END;
 $$ LANGUAGE plpgsql;
 
